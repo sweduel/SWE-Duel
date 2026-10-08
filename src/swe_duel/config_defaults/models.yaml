@@ -1,0 +1,84 @@
+models:
+  # Per-model knobs only: model id, temperature, the selectable
+  # reasoning-effort / OpenRouter-provider menus, and per-provider
+  # client-side request-rate caps (`provider_rate_limits`, requests/minute —
+  # see scripts/probe_provider_rate_limits.py). The per-response completion
+  # cap (`max_tokens`) is arena-wide and lives in arena.yaml
+  # (`agent_model.max_tokens`), stamped onto every entry at load time.
+  glm-5.3-flash:
+    model_id: "z-ai/glm-5.3-flash"
+    temperature: 0.2
+    # Selectable reasoning efforts (OpenRouter `reasoning.effort`) and
+    # provider slugs for this model. A participant is the 4-tuple
+    # (model, harness, reasoning_effort, provider); empty selection = model
+    # default / OpenRouter auto-routing. Efforts validated live by
+    # tests/test_model_cost_tracking.py; slugs checked against the model's
+    # OpenRouter endpoints.
+    # Per-token costs are NOT configured here: agent harnesses track cost
+    # dynamically from the OpenRouter-reported per-response cost, falling
+    # back to a cached query of the OpenRouter endpoints API (see
+    # src/swe_duel/agents/harness/cost_tracking.py).
+    reasoning_efforts: ["max", "high", "low"]
+    providers: [
+      "z-ai", 
+      "makora", 
+      "fireworks", 
+      "parasail/fp8", 
+    ]
+    provider_rate_limits:
+      "z-ai": 60
+      "makora": 6
+      "fireworks": 6
+      "parasail/fp8": 6
+      "default": 6
+
+  deepseek-v4-flash-0731:
+    model_id: "deepseek/deepseek-v4-flash-0731"
+    temperature: 0.2
+    reasoning_efforts: ["max", "high", "low"]
+    providers: [
+      "deepseek", 
+      "wafer/fast", 
+      "fireworks", 
+      "baseten/fp8", 
+    ]
+    provider_rate_limits:
+      "deepseek": 60
+      "wafer/fast": 60
+      "fireworks": 40
+      "baseten/fp8": 6
+      "default": 6
+
+  gemini-3.8-flash:
+    model_id: "google/gemini-3.8-flash"
+    temperature: 0.2
+    # Alibaba is the only OpenRouter endpoint serving this model.
+    # Severe rate-limiting!
+    reasoning_efforts: ["high", "medium", "low"]
+    providers: [
+      "google-ai-studio/flex",
+      "google-vertex/global/flex",
+      ]
+    provider_rate_limits:
+      "google-ai-studio/flex": 60
+      "google-vertex/global/flex": 60
+      "default": 60
+
+  qwen3.8-flash:
+    model_id: "qwen/qwen3.8-flash"
+    temperature: 0.2
+    # Alibaba is the only OpenRouter endpoint serving this model.
+    # Severe rate-limiting!
+    reasoning_efforts: ["xhigh", "medium", "low"]
+    providers: ["alibaba"]
+    provider_rate_limits:
+      "alibaba": 40
+      "default": 40
+
+  # requires age verification!
+  # muse-spark-1.3-contributor:
+  #   model_id: "meta/muse-spark-1.3-contributor"
+  #   temperature: 0.2
+  #   # Meta is the only OpenRouter endpoint serving this model.
+  #   reasoning_efforts: ["xhigh", "high", "medium", "low", "minimal"]
+  #   providers: ["meta"]

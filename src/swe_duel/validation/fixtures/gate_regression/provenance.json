@@ -1,0 +1,85 @@
+{
+  "_comment": "Gate-regression fixtures copied verbatim from a real challenge-bank generation run (see AGENTS.md / README 'Validating the environment'). agent_trajectory.steps lists were emptied \u2014 the Docker-backed gates and TurnScorer never replay LLM steps; every other field is byte-identical.",
+  "repos": {
+    "flask": {
+      "challenge_id": "10b2d12c-bd0d-43a8-902d-78d72ee40033",
+      "defense_id": "00f6a48b-6c10-4d63-a756-a1763526073d",
+      "defense_challenge_id": "b5c265ec-a487-4440-b31d-b4097d8e3362",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "jwt": {
+      "challenge_id": "319e9629-7d5e-4fe4-8d84-b092bf4cdb6e",
+      "defense_id": "0361ecc3-b0e1-45d9-8b6f-0e9fef27f73b",
+      "defense_challenge_id": "52cf9f51-7fa0-4375-9df5-d70f4cb733b7",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "java-html-sanitizer": {
+      "challenge_id": "041f8a2c-7d6c-46fc-8808-c5eec7cf8e6e",
+      "defense_id": "004e21b3-648f-4517-94db-b9dd23c5008a",
+      "defense_challenge_id": "041f8a2c-7d6c-46fc-8808-c5eec7cf8e6e",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": true
+    },
+    "helmet": {
+      "challenge_id": "3d631512-ff1e-429e-87f9-4c26a0372d6e",
+      "defense_id": "00f1d35f-c34c-4c84-b7a2-e57ed76c9826",
+      "defense_challenge_id": "b2be8f14-f84b-4e26-a20a-4adbf732c9e0",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "cjson": {
+      "challenge_id": "06d62fee-3c8b-4440-bb42-3154be30a7f5",
+      "defense_id": "00fd54ae-6cea-4f65-b8e1-0715fb055f0b",
+      "defense_challenge_id": "af9c3bc4-fa27-47c7-938f-4b95a01c4b8a",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "jinja": {
+      "challenge_id": "08c5c681-29dd-40e9-b442-4d42a3120beb",
+      "defense_id": "00f26fc2-aa9a-4704-a432-f5da36b13dc2",
+      "defense_challenge_id": "f00d6874-a2ea-49de-8e49-5eb7dbee5eb7",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "expressjs": {
+      "challenge_id": "066f72a2-4530-4fde-8ad4-f04cf506f942",
+      "defense_id": "097bb8fa-ec55-46fa-a7d2-7e4dca4b614d",
+      "defense_challenge_id": "d9f46624-8fee-44f9-b308-2256b1ed8649",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "java-jwt": {
+      "challenge_id": "0094c670-1519-4549-9287-79bb816f8682",
+      "defense_id": "073c8cd3-b20a-4266-ab7e-0a147681efe4",
+      "defense_challenge_id": "338bfd5e-77a8-4b2b-abfd-64fa49681324",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "libexpat": {
+      "challenge_id": "1807b9fb-401a-44a0-be3b-4d6a51f936f2",
+      "defense_id": "028db636-0168-4527-9fda-ec774703a3e9",
+      "defense_challenge_id": "ddb7a3d1-48ea-4880-8614-20c0f376b2fc",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    },
+    "chi": {
+      "challenge_id": "051b5bd0-9555-4ec8-99ed-69aba9facb00",
+      "defense_id": "031f4c49-0bcf-4f94-a34e-b28d134b0edb",
+      "defense_challenge_id": "b18d3f97-ab11-4571-8683-81fe639e03a4",
+      "source": "data/challenge_bank + data/defenses (real generation run)",
+      "transform": "agent_trajectory.steps emptied; all other fields verbatim",
+      "defense_challenge_is_red_gate_challenge": false
+    }
+  }
+}

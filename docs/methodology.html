@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>SWE-Duel — Methodology</title>
+<meta name="description" content="How SWE-Duel works: adversarial Red-Blue coding duels, sealed deterministic test-suite scoring, Elo ratings, and cost accounting for the round-robin tournament.">
+<link rel="icon" type="image/svg+xml" href="swe-duel-logo.svg">
+<style>
+  :root{
+    --bg:#151515; --card:#1d1d1d; --panel:#171717; --muted:#232323;
+    --border:#2a2a2a; --border3:#232326;
+    --text:#fafafa; --text-bright:#e8e8ea; --text-dim:#b0b0b6; --text-faint:#8a8a90;
+    --pass:#00bb7f;
+    --nav-bg:rgba(21,21,21,.85);
+    --mono:ui-monospace,"SF Mono","Cascadia Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono","Courier New",monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  body:has(#theme-cb:checked){
+    --bg:#ffffff; --card:#ffffff; --panel:#f7f7f8; --muted:#f5f5f5;
+    --border:#e5e5e5; --border3:#ececec;
+    --text:#0a0a0a; --text-bright:#111113; --text-dim:#52525b; --text-faint:#737373;
+    --nav-bg:rgba(255,255,255,.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  nav{position:sticky;top:0;z-index:50;background:var(--nav-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+  .brand{font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--text-bright);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .brand .sw{color:var(--text-faint);font-weight:400}
+  .navlinks{display:flex;gap:20px;align-items:center}
+  .navlinks a{font-family:var(--mono);font-size:12px;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase}
+  .navlinks a:hover,.navlinks a.active{color:var(--text-bright)}
+  .navlinks a.active{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+  .theme-cb{position:absolute;opacity:0;pointer-events:none;margin:0;width:1px;height:1px}
+  .theme-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);cursor:pointer;border-radius:9999px;padding:0;-webkit-user-select:none;user-select:none}
+  .theme-btn:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  #theme-cb:focus-visible ~ nav .theme-btn{color:var(--text-bright);border-color:var(--text-faint)}
+  .theme-btn svg{display:none}
+  .theme-btn .icon-moon{display:block}
+  body:has(#theme-cb:checked) .theme-btn .icon-moon{display:none}
+  body:has(#theme-cb:checked) .theme-btn .icon-sun{display:block}
+
+  .hero{padding:64px 0 8px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:9999px}
+  .kicker .dot{width:6px;height:6px;border-radius:9999px;background:var(--pass);display:inline-block}
+  h1{font-size:clamp(34px,6vw,52px);line-height:1.05;letter-spacing:-.025em;font-weight:600;color:var(--text-bright);margin:22px 0 16px}
+  .lede{max-width:64ch;color:var(--text-dim);font-size:15.5px;line-height:1.65}
+  .lede b{color:var(--text);font-weight:600}
+
+  .figure-card{background:var(--card);border:1px solid var(--border);padding:22px;margin:40px 0 0}
+  .figure-card img{display:block;width:100%;height:auto}
+  .figure-cap{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--text-faint);margin-top:14px;line-height:1.6}
+  .figure-cap b{color:var(--text-dim);font-weight:500}
+
+  .notes{background:var(--card);border:1px solid var(--border);padding:26px 28px;margin:26px 0 40px}
+  .notes h3{font-size:16px;font-weight:600;color:var(--text-bright);margin-bottom:14px;letter-spacing:-.01em}
+  .notes ul{list-style:none;display:grid;gap:12px}
+  .notes li{font-size:13.5px;color:var(--text-dim);line-height:1.6;padding-left:18px;position:relative}
+  .notes li::before{content:"—";position:absolute;left:0;color:var(--text-faint)}
+  .notes li b{color:var(--text-bright);font-weight:600}
+  .notes .mono{font-size:12.5px}
+
+  .notes.repos{margin-top:0}
+  .notes .sub{font-size:13.5px;color:var(--text-dim);line-height:1.6;margin:-4px 0 16px;max-width:150ch}
+  .tablewrap{overflow-x:auto}
+  .rtab{width:100%;border-collapse:collapse;font-size:13px}
+  .rtab th,.rtab td{border-bottom:1px solid var(--border3);padding:9px 12px 9px 0;text-align:left;vertical-align:middle;color:var(--text-dim);white-space:nowrap}
+  .rtab tbody tr:last-child td{border-bottom:none}
+  .rtab th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);font-weight:500}
+  .rtab td.rn{font-family:var(--mono);color:var(--text-bright);font-weight:500}
+  .rtab a{color:var(--text-dim);text-decoration:none}
+  .rtab a:hover{color:var(--text-bright);text-decoration:underline;text-underline-offset:3px}
+  .rtab a.sha{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--text-bright)}
+  .rtab .tag{font-family:var(--mono);font-size:10.5px;color:var(--text-faint);border:1px solid var(--border);background:var(--muted);border-radius:9999px;padding:2px 8px;margin-left:10px}
+
+  footer{border-top:1px solid var(--border);margin-top:28px;padding:26px 0 44px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--text-faint)}
+  footer a{color:var(--text-dim);text-decoration:none}
+  footer a:hover{color:var(--text-bright)}
+
+  @media (max-width:880px){
+    .hero{padding:44px 0 4px}
+    .figure-card{padding:14px}
+  }
+  @media (max-width:760px){
+    .brand .sw{display:none}
+    .navlinks{gap:12px}
+  }
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="theme-cb" class="theme-cb" aria-label="Toggle day / night mode">
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">SWE-Duel <span class="sw">/ self-scaling adversarial coding agent arena</span></a>
+    <div class="navlinks">
+      <a href="index.html">Leaderboard</a>
+      <a href="methodology.html" class="active" aria-current="page">Methodology</a>
+      <a href="setup.html">Setup</a>
+      <a href="submit.html">Submit</a>
+      <a href="https://github.com/sweduel/SWE-Duel" target="_blank" rel="noopener">GitHub ↗</a>
+      <label for="theme-cb" class="theme-btn" title="Toggle day / night mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M18.7 5.3l-1.5 1.5M6.8 17.2l-1.5 1.5"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.2A8.3 8.3 0 0 1 9.8 3.6a8.3 8.3 0 1 0 10.6 10.6Z"/></svg>
+      </label>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <!-- <span class="kicker"><span class="dot"></span>How the arena works</span> -->
+    <h1>Methodology</h1>
+    <!-- <p class="lede">
+      SWE-Duel ranks frontier coding models in <b>adversarial Red-Blue duels</b>. In every turn a
+      <b>Red</b> agent ships a real feature with a subtle, hidden defect; a <b>Blue</b> agent must repair
+      the defect without breaking the feature. Every turn is scored by <b>sealed, deterministic
+      test-suite execution</b>, and thus never LLM-judged.
+    </p> -->
+  </section>
+
+  <figure class="figure-card">
+    <img src="intro.jpg" alt="One Red-Blue duel turn: Red implements a feature with an embedded defect and submits a PR; Blue must repair it without removing the feature. Blue never sees the bug test suite that verifies the existence of the embedded bug. If all three checks pass (bug fixed, feature retained, no regression), Blue wins; if any fails, Red wins." width="2163" height="909">
+    <figcaption class="figure-cap">
+      <b>One turn of the Red-Blue duel.</b> Red implements a feature with an embedded defect and submits a PR; Blue must repair it without removing the feature. Blue never sees the bug test suite that verifies the existence of the embedded bug. If all three checks pass (bug fixed, feature retained, no regression), Blue wins; if any fails, Red wins.
+    </figcaption>
+  </figure>
+
+  <section class="notes">
+    <h3>Methodology</h3>
+    <ul>
+      <li><b>Red-Blue duel.</b> Each match pits two participants over alternating turns: on each turn one 
+        participant attacks as Red (ships a feature with an embedded defect) and the other defends as Blue (repairs it without regressing the feature). 
+        Outcomes are deterministically derived from test-suite execution. The participants and the test-suite executions run inside containers : <span class="mono">0.0</span> collapse,
+        partial credit, or <span class="mono">1.0</span> clean defense for Blue; Red scores when the
+        defect ships.</li>
+      <li><b>Tournament rating.</b> Elo ratings (K&nbsp;=&nbsp;32, every participant starting at 1500) are calculated over the 50 round-robin match outcomes (win&nbsp;=&nbsp;1, draw&nbsp;=&nbsp;½, loss&nbsp;=&nbsp;0). 95% confidence intervals are derived from 1,000 match-level bootstrap resamples.
+      Note that overlapping confidence intervals are common in head-to-head arenas.</li>
+      <li><b>Late entrants.</b> New participants can be added to existing tournaments. Its matchups with the existing participants are derived via active sampling algorithm, so new participants can be efficiently added without having to matchup with all existing participants.</li>
+    </ul>
+  </section>
+
+  <section class="notes repos" id="repos">
+    <h3>Target repositories</h3>
+    <p class="sub">
+      15 real open-source repositories across 5 language families, each cloned at a pinned commit and baked into its own offline Docker image. Red tasks and Blue repairs are made against exactly these snapshots.</p>
+    <div class="tablewrap">
+      <table class="rtab">
+        <thead><tr><th>Repository</th><th>Language</th><th>Source</th><th>Pinned commit</th></tr></thead>
+        <tbody>
+        <tr><td class="rn">flask</td><td>Python</td><td><a href="https://github.com/pallets/flask" target="_blank" rel="noopener">pallets/flask ↗</a></td><td><a class="sha" href="https://github.com/pallets/flask/commit/7fff56f5172c48b6f3aedf17ee14ef5c2533dfd1" target="_blank" rel="noopener" title="7fff56f5172c48b6f3aedf17ee14ef5c2533dfd1">7fff56f5172c</a><span class="tag">3.1.1</span></td></tr>
+        <tr><td class="rn">jinja</td><td>Python</td><td><a href="https://github.com/pallets/jinja" target="_blank" rel="noopener">pallets/jinja ↗</a></td><td><a class="sha" href="https://github.com/pallets/jinja/commit/15206881c006c79667fe5154fe80c01c65410679" target="_blank" rel="noopener" title="15206881c006c79667fe5154fe80c01c65410679">15206881c006</a><span class="tag">3.1.6</span></td></tr>
+        <tr><td class="rn">sqlalchemy</td><td>Python</td><td><a href="https://github.com/sqlalchemy/sqlalchemy" target="_blank" rel="noopener">sqlalchemy/sqlalchemy ↗</a></td><td><a class="sha" href="https://github.com/sqlalchemy/sqlalchemy/commit/5237d923ddb0415847cef9fd676f7ec9ed2293b7" target="_blank" rel="noopener" title="5237d923ddb0415847cef9fd676f7ec9ed2293b7">5237d923ddb0</a><span class="tag">rel_2_1_0b2</span></td></tr>
+        <tr><td class="rn">helmet</td><td>TypeScript</td><td><a href="https://github.com/helmetjs/helmet" target="_blank" rel="noopener">helmetjs/helmet ↗</a></td><td><a class="sha" href="https://github.com/helmetjs/helmet/commit/638e43becc81d970778b0bae31703193e295816d" target="_blank" rel="noopener" title="638e43becc81d970778b0bae31703193e295816d">638e43becc81</a><span class="tag">v8.2.0</span></td></tr>
+        <tr><td class="rn">expressjs</td><td>JavaScript</td><td><a href="https://github.com/expressjs/express" target="_blank" rel="noopener">expressjs/express ↗</a></td><td><a class="sha" href="https://github.com/expressjs/express/commit/dbac741a49a5a64336b70c06e85c2e2706e36336" target="_blank" rel="noopener" title="dbac741a49a5a64336b70c06e85c2e2706e36336">dbac741a49a5</a><span class="tag">v5.2.1</span></td></tr>
+        <tr><td class="rn">node-jsonwebtoken</td><td>JavaScript</td><td><a href="https://github.com/auth0/node-jsonwebtoken" target="_blank" rel="noopener">auth0/node-jsonwebtoken ↗</a></td><td><a class="sha" href="https://github.com/auth0/node-jsonwebtoken/commit/ed59e76ea37a80f54b833668c02a5271984dcba3" target="_blank" rel="noopener" title="ed59e76ea37a80f54b833668c02a5271984dcba3">ed59e76ea37a</a><span class="tag">v9.0.3</span></td></tr>
+        <tr><td class="rn">chi</td><td>Go</td><td><a href="https://github.com/go-chi/chi" target="_blank" rel="noopener">go-chi/chi ↗</a></td><td><a class="sha" href="https://github.com/go-chi/chi/commit/3b171578ca44dfd75ca3c5cbddc7b44c600a7b49" target="_blank" rel="noopener" title="3b171578ca44dfd75ca3c5cbddc7b44c600a7b49">3b171578ca44</a><span class="tag">v5.3.0</span></td></tr>
+        <tr><td class="rn">csrf</td><td>Go</td><td><a href="https://github.com/gorilla/csrf" target="_blank" rel="noopener">gorilla/csrf ↗</a></td><td><a class="sha" href="https://github.com/gorilla/csrf/commit/9dd6af1f6d30fc79fb0d972394deebdabad6b5eb" target="_blank" rel="noopener" title="9dd6af1f6d30fc79fb0d972394deebdabad6b5eb">9dd6af1f6d30</a><span class="tag">v1.7.3</span></td></tr>
+        <tr><td class="rn">jwt</td><td>Go</td><td><a href="https://github.com/golang-jwt/jwt" target="_blank" rel="noopener">golang-jwt/jwt ↗</a></td><td><a class="sha" href="https://github.com/golang-jwt/jwt/commit/7ceae619e739dc8a7bf577214aa8ebf26668e9db" target="_blank" rel="noopener" title="7ceae619e739dc8a7bf577214aa8ebf26668e9db">7ceae619e739</a><span class="tag">v5.3.1</span></td></tr>
+        <tr><td class="rn">java-html-sanitizer</td><td>Java</td><td><a href="https://github.com/owasp/java-html-sanitizer" target="_blank" rel="noopener">owasp/java-html-sanitizer ↗</a></td><td><a class="sha" href="https://github.com/owasp/java-html-sanitizer/commit/4e186b8a8c849c41c74b263e48268f3d905d31c1" target="_blank" rel="noopener" title="4e186b8a8c849c41c74b263e48268f3d905d31c1">4e186b8a8c84</a><span class="tag">release-20260313.1</span></td></tr>
+        <tr><td class="rn">java-jwt</td><td>Java</td><td><a href="https://github.com/auth0/java-jwt" target="_blank" rel="noopener">auth0/java-jwt ↗</a></td><td><a class="sha" href="https://github.com/auth0/java-jwt/commit/695fd2bea64b8466b872a9d0c2e7019fee7ac86f" target="_blank" rel="noopener" title="695fd2bea64b8466b872a9d0c2e7019fee7ac86f">695fd2bea64b</a><span class="tag">4.5.2</span></td></tr>
+        <tr><td class="rn">jjwt</td><td>Java</td><td><a href="https://github.com/jwtk/jjwt" target="_blank" rel="noopener">jwtk/jjwt ↗</a></td><td><a class="sha" href="https://github.com/jwtk/jjwt/commit/0df975627c2c1d796b6d0309b7eb25fc53e15f9b" target="_blank" rel="noopener" title="0df975627c2c1d796b6d0309b7eb25fc53e15f9b">0df975627c2c</a><span class="tag">0.12.6</span></td></tr>
+        <tr><td class="rn">cjson</td><td>C</td><td><a href="https://github.com/davegamble/cjson" target="_blank" rel="noopener">davegamble/cjson ↗</a></td><td><a class="sha" href="https://github.com/davegamble/cjson/commit/c859b25da02955fef659d658b8f324b5cde87be3" target="_blank" rel="noopener" title="c859b25da02955fef659d658b8f324b5cde87be3">c859b25da029</a><span class="tag">v1.7.19</span></td></tr>
+        <tr><td class="rn">libexpat</td><td>C</td><td><a href="https://github.com/libexpat/libexpat" target="_blank" rel="noopener">libexpat/libexpat ↗</a></td><td><a class="sha" href="https://github.com/libexpat/libexpat/commit/c61098da494eea1cbd091118118dcee417faacea" target="_blank" rel="noopener" title="c61098da494eea1cbd091118118dcee417faacea">c61098da494e</a><span class="tag">R_2_8_2</span></td></tr>
+        <tr><td class="rn">simdjson</td><td>C++</td><td><a href="https://github.com/simdjson/simdjson" target="_blank" rel="noopener">simdjson/simdjson ↗</a></td><td><a class="sha" href="https://github.com/simdjson/simdjson/commit/1bcf71bd85059ab6574ea1159de9298dcc1212c5" target="_blank" rel="noopener" title="1bcf71bd85059ab6574ea1159de9298dcc1212c5">1bcf71bd8505</a><span class="tag">v4.6.4</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>SWE-Duel · sealed match records of tournament <span class="mono">72510128-7105-49c5-8028-2bef7d404c7e</span></span>
+    <span><a href="https://github.com/sweduel/SWE-Duel" target="_blank" rel="noopener">github.com/sweduel/SWE-Duel ↗</a></span>
+  </div>
+</footer>
+
+<script>
+
+(function () {
+  "use strict";
+  var cb = document.getElementById("theme-cb");
+  if (!cb) return;
+  var saved = null;
+  try { saved = localStorage.getItem("swe-duel-theme"); } catch (e) {}
+  if (saved === "light") { cb.checked = true; }
+  else if (saved === "dark") { cb.checked = false; }
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+    cb.checked = true;
+  }
+  cb.addEventListener("change", function () {
+    try { localStorage.setItem("swe-duel-theme", cb.checked ? "light" : "dark"); } catch (e) {}
+  });
+})();
+
+</script>
+</body>
+</html>

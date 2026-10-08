@@ -1,0 +1,5 @@
+language: java
+build_tool: maven
+module: impl
+test_source_dir: impl/src/test/java
+import_root: io.jsonwebtoken

@@ -1,0 +1,5 @@
+language: java
+build_tool: gradle
+module: ":java-jwt"
+test_source_dir: lib/src/test/java
+import_root: com.auth0.jwt

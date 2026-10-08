@@ -1,0 +1,10 @@
+# Pins required to install the OpenHands agent-server alongside its deps.
+#
+# openhands-sdk pulls `lmnr` (Laminar telemetry), which hard-pins
+# opentelemetry-semantic-conventions==0.60b1. pip's resolver fails to find the
+# matching opentelemetry-instrumentation==0.60b1 on its own (ResolutionImpossible),
+# so we pin the otel trio explicitly. Keep in sync with the host venv — see the
+# `openhands-install-otel-pin` project memory.
+opentelemetry-instrumentation==0.60b1
+opentelemetry-semantic-conventions==0.60b1
+opentelemetry-instrumentation-threading==0.60b1

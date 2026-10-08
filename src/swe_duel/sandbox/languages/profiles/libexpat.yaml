@@ -1,0 +1,12 @@
+language: c
+build_method: cmake
+cmake_source_root: expat
+cmake_target: expat
+cmake_extra_args: "-DEXPAT_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DEXPAT_BUILD_TESTS=OFF"
+cmake_build_dir: /tmp/exb
+include_flags: "-Iexpat/lib"
+link_flags: "-L/tmp/exb -lexpat -lm"
+header: expat.h
+prompt_hints:
+  include_directive: '#include "expat.h"'
+  source_dir: expat/lib

@@ -1,0 +1,8 @@
+language: c
+build_method: glob
+source_dir: "."
+include_flags: "-I."
+source_files: null
+exclude_glob: test*.c
+maxdepth: 1
+header: cJSON.h

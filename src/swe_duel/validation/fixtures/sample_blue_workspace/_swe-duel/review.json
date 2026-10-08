@@ -1,0 +1,10 @@
+{
+  "findings": [
+    {
+      "location": "src/calculator/basic.py:modulo",
+      "severity": "high",
+      "description": "The PR's modulo implementation uses `a - int(a / b) * b`, which truncates toward zero. For negative operands this disagrees with Python's `%` operator (e.g., modulo(-5, 3) returns -2 instead of 1). This is a subtle logic bug that diverges from standard semantics."
+    }
+  ],
+  "fix_explanation": "Replaced the hand-rolled truncation formula with Python's native `%` operator so modulo() matches the documented Python semantics for negative operands while preserving the ZeroDivisionError behavior."
+}

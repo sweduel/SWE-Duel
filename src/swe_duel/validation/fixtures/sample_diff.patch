@@ -1,0 +1,18 @@
+--- src/calculator/basic.py
++++ src/calculator/basic.py
+@@ -1,7 +1,14 @@
+ """Basic arithmetic operations."""
+
++from __future__ import annotations
++
+
+ def add(a: float, b: float) -> float:
+     """Return the sum of a and b."""
+     return a + b
+
++
++def modulo(a: float, b: float) -> float:
++    """Return a modulo b."""
++    if b == 0:
++        raise ZeroDivisionError("modulo by zero")
++    return a % b

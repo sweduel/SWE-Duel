@@ -1,0 +1,5 @@
+language: java
+build_tool: maven
+module: owasp-java-html-sanitizer
+test_source_dir: owasp-java-html-sanitizer/src/test/java
+import_root: org.owasp.html

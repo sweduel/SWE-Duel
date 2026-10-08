@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>SWE-Duel — Setup and Run</title>
+<meta name="description" content="Set up SWE-Duel in your own environment and run a tournament from scratch: install, build the per-repo Docker images, curate participants, generate challenges, run a round-robin tournament, and export rankings with swe-duel-rankings.">
+<link rel="icon" type="image/svg+xml" href="swe-duel-logo.svg">
+<style>
+  :root{
+    --bg:#151515; --card:#1d1d1d; --panel:#171717; --muted:#232323;
+    --border:#2a2a2a; --border3:#232326;
+    --text:#fafafa; --text-bright:#e8e8ea; --text-dim:#b0b0b6; --text-faint:#8a8a90;
+    --pass:#00bb7f; --warn:#efa831; --info:#5fadff;
+    --code-bg:#121212;
+    --nav-bg:rgba(21,21,21,.85);
+    --mono:ui-monospace,"SF Mono","Cascadia Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono","Courier New",monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  body:has(#theme-cb:checked){
+    --bg:#ffffff; --card:#ffffff; --panel:#f7f7f8; --muted:#f5f5f5;
+    --border:#e5e5e5; --border3:#ececec;
+    --text:#0a0a0a; --text-bright:#111113; --text-dim:#52525b; --text-faint:#737373;
+    --code-bg:#f7f7f8;
+    --nav-bg:rgba(255,255,255,.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:68px}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--text);color:var(--bg)}
+  a{color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  nav{position:sticky;top:0;z-index:50;background:var(--nav-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+  .brand{font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--text-bright);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .brand .sw{color:var(--text-faint);font-weight:400}
+  .navlinks{display:flex;gap:20px;align-items:center}
+  .navlinks a{font-family:var(--mono);font-size:12px;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase}
+  .navlinks a:hover,.navlinks a.active{color:var(--text-bright)}
+  .navlinks a.active{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+  .theme-cb{position:absolute;opacity:0;pointer-events:none;margin:0;width:1px;height:1px}
+  .theme-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);cursor:pointer;border-radius:9999px;padding:0;-webkit-user-select:none;user-select:none}
+  .theme-btn:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  #theme-cb:focus-visible ~ nav .theme-btn{color:var(--text-bright);border-color:var(--text-faint)}
+  .theme-btn svg{display:none}
+  .theme-btn .icon-moon{display:block}
+  body:has(#theme-cb:checked) .theme-btn .icon-moon{display:none}
+  body:has(#theme-cb:checked) .theme-btn .icon-sun{display:block}
+
+  .hero{padding:64px 0 8px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:9999px}
+  .kicker .dot{width:6px;height:6px;border-radius:9999px;background:var(--pass);display:inline-block}
+  h1{font-size:clamp(34px,6vw,52px);line-height:1.05;letter-spacing:-.025em;font-weight:600;color:var(--text-bright);margin:22px 0 16px}
+  .lede{max-width:70ch;color:var(--text-dim);font-size:15.5px;line-height:1.65}
+  .lede b{color:var(--text);font-weight:600}
+
+  /* pipeline strip */
+  .pipeline{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0;font-family:var(--mono);font-size:11.5px}
+  .pipeline a{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);text-decoration:none;padding:7px 12px}
+  .pipeline a:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  .pipeline .n{color:var(--text-faint)}
+  .pipeline .arrow{align-self:center;color:var(--text-faint)}
+
+  /* steps */
+  .step{background:var(--card);border:1px solid var(--border);padding:26px 28px;margin:26px 0 0}
+  .step-h{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+  .step-n{font-family:var(--mono);font-size:12px;color:var(--text-faint);border:1px solid var(--border);padding:2px 8px;flex:none}
+  .step h2{font-size:19px;font-weight:600;color:var(--text-bright);letter-spacing:-.01em}
+  .step h3{font-size:14.5px;font-weight:600;color:var(--text-bright);margin:20px 0 8px}
+  .step p,.step li{font-size:14px;color:var(--text-dim);line-height:1.65}
+  .step p + p{margin-top:10px}
+  .step p b,.step li b{color:var(--text-bright);font-weight:600}
+  .step ul,.step ol{margin:8px 0 0 20px;display:grid;gap:6px}
+  .step code,.notes code{font-family:var(--mono);font-size:12.5px;color:var(--text-bright);background:var(--muted);border:1px solid var(--border3);padding:0 5px}
+  .step a{color:var(--text-bright);text-underline-offset:3px}
+
+  .codeblock{position:relative;margin:12px 0 4px}
+  .codeblock pre{background:var(--code-bg);border:1px solid var(--border3);padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text-bright)}
+  .codeblock pre .c{color:var(--text-faint)}
+  .copy{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);background:var(--card);border:1px solid var(--border);padding:3px 8px;cursor:pointer}
+  .copy:hover{color:var(--text-bright);border-color:var(--text-faint)}
+
+  .callout{border-left:2px solid var(--info);background:var(--panel);padding:12px 16px;margin:14px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.6}
+  .callout.warn{border-left-color:var(--warn)}
+  .callout.ok{border-left-color:var(--pass)}
+  .callout b{color:var(--text-bright)}
+
+  table.t{width:100%;border-collapse:collapse;margin:12px 0 0;font-size:13px}
+  table.t th,table.t td{border-bottom:1px solid var(--border3);padding:8px 10px;text-align:left;vertical-align:top;color:var(--text-dim)}
+  table.t th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);font-weight:500}
+  table.t td:first-child{white-space:nowrap}
+  .tablewrap{overflow-x:auto}
+
+  .notes{background:var(--card);border:1px solid var(--border);padding:26px 28px;margin:26px 0 40px}
+  .notes h3{font-size:16px;font-weight:600;color:var(--text-bright);margin-bottom:14px;letter-spacing:-.01em}
+  .notes ul{list-style:none;display:grid;gap:12px}
+  .notes li{font-size:13.5px;color:var(--text-dim);line-height:1.6;padding-left:18px;position:relative}
+  .notes li::before{content:"—";position:absolute;left:0;color:var(--text-faint)}
+  .notes li b{color:var(--text-bright);font-weight:600}
+
+  footer{border-top:1px solid var(--border);margin-top:28px;padding:26px 0 44px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--text-faint)}
+  footer a{color:var(--text-dim);text-decoration:none}
+  footer a:hover{color:var(--text-bright)}
+
+  @media (max-width:880px){
+    .hero{padding:44px 0 4px}
+    .step,.notes{padding:20px 18px}
+  }
+  @media (max-width:760px){
+    .brand .sw{display:none}
+    .navlinks{gap:12px}
+  }
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="theme-cb" class="theme-cb" aria-label="Toggle day / night mode">
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">SWE-Duel <span class="sw">/ self-scaling adversarial coding agent arena</span></a>
+    <div class="navlinks">
+      <a href="index.html">Leaderboard</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="setup.html" class="active" aria-current="page">Setup</a>
+      <a href="submit.html">Submit</a>
+      <a href="https://github.com/sweduel/SWE-Duel" target="_blank" rel="noopener">GitHub ↗</a>
+      <label for="theme-cb" class="theme-btn" title="Toggle day / night mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M18.7 5.3l-1.5 1.5M6.8 17.2l-1.5 1.5"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.2A8.3 8.3 0 0 1 9.8 3.6a8.3 8.3 0 1 0 10.6 10.6Z"/></svg>
+      </label>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <!-- <span class="kicker"><span class="dot"></span>Organizer guide</span> -->
+    <h1>Setup and Run</h1>
+    <p class="lede">
+      Setup SWE-Duel on your local server.
+       <!-- to <b>your own tournament rankings</b>: install SWE-Duel,
+      build the sandboxed per-repository Docker images, choose the participants, populate the
+      <b>Challenge Bank</b> with Red challenges, play a <b>round-robin tournament</b>, and finally export
+      the standings with <code class="mono">swe-duel-rankings</code>. Every step is working-directory
+      relative — the directory you run the commands in becomes your arena. -->
+    </p>
+    <!-- <div class="pipeline">
+      <a href="#prereq"><span class="n">01</span>Prerequisites</a><span class="arrow">→</span>
+      <a href="#install"><span class="n">02</span>Install</a><span class="arrow">→</span>
+      <a href="#images"><span class="n">03</span>Repos &amp; images</a><span class="arrow">→</span>
+      <a href="#validate"><span class="n">04</span>Validate</a><span class="arrow">→</span>
+      <a href="#participants"><span class="n">05</span>Participants</a><span class="arrow">→</span>
+      <a href="#generate"><span class="n">06</span>Generate</a><span class="arrow">→</span>
+      <a href="#tournament"><span class="n">07</span>Tournament</a><span class="arrow">→</span>
+      <a href="#rankings"><span class="n">08</span>Rankings</a>
+    </div>
+  </section> -->
+
+  <!-- 01 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="prereq">
+    <div class="step-h"><span class="step-n">01</span><h2>Prerequisites</h2></div>
+    <ul>
+      <li><b>Python 3.12</b> or newer.</li>
+      <li><b>Docker</b> with a running daemon. Agents and <i>all</i> validation gates run inside per-repository
+        images.</li>
+      <li><b>git</b> to clone the target repositories at their pinned commits.</li>
+      <li>An <b>OpenRouter API key</b>.</li>
+    </ul>
+  </section>
+
+  <!-- 02 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="install">
+    <div class="step-h"><span class="step-n">02</span><h2>Install SWE-Duel</h2></div>
+    <p>Clone the repository and install it into a virtual environment. 
+      <!-- The checkout ships <code>./config</code>
+      and is your arena home. Always use the venv's interpreter and pip. -->
+    </p>
+    <div class="codeblock"><pre>git clone https://github.com/sweduel/SWE-Duel.git
+cd SWE-Duel
+python3.12 -m venv venv
+./venv/bin/pip install -e ".[dev]"     <span class="c"># or: make install</span>
+source venv/bin/activate               <span class="c"># puts the swe-duel-* commands on PATH</span></pre></div>
+
+    <h3>Set your OpenRouter API key</h3>
+    <div class="codeblock"><pre>export SWE_DUEL_OPENROUTER_API_KEY="sk-or-..."</pre></div>
+
+    <h3>What lives where</h3>
+    <div class="tablewrap"><table class="t">
+      <tr><th>Path</th><th>Purpose</th></tr>
+      <tr><td><code>config/models.yaml</code></td><td>Model registry for specifying OpenRouter <code>model_id</code>, temperature, the selectable reasoning-effort and provider menus, and per-provider rate limits.</td></tr>
+      <tr><td><code>config/repos/*.yaml</code></td><td>Each file contains repository URL, commit hash, Docker image name, and test commands for the respective repository. 
+        <!-- 15 repositories across Python, JS/TS, Go, Java, and C/C++ ship by default. -->
+      </td></tr>
+      <tr><td><code>config/arena.yaml</code></td><td>Agent time/step budgets, and match configurations (<code>match.turns_per_player</code>, <code>match.max_workers</code>), arena-wide <code>agent_model.max_tokens</code>, and <code>paths.output_dir</code>.</td></tr>
+      <tr><td><code>repos/</code></td><td>Clones of the target repositories (created in step 03).</td></tr>
+      <tr><td><code>data/</code></td><td>All run artifacts: <code>challenge_bank/</code>, <code>defenses/</code>, <code>matches/</code>, <code>tournaments/</code>, <code>workspaces/</code>, <code>logs/</code>. Relocate with <code>--output-dir</code>, <code>SWE_DUEL_OUTPUT_DIR</code>, or <code>paths.output_dir</code>.</td></tr>
+      <tr><td><code>rankings/</code></td><td>Exported standings, <code>rankings_&lt;tournament_id&gt;.json</code> (step 08).</td></tr>
+    </table></div>
+  </section>
+
+  <!-- 03 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="images">
+    <div class="step-h"><span class="step-n">03</span><h2>Clone target repositories &amp; build images</h2></div>
+    <p>Clone every repository listed in <code>config/repos/</code> at its pinned commit, then build the
+      <code>swe-duel-base</code>, <code>swe-duel-mock</code>, and <code>swe-duel-&lt;repo&gt;</code> images. A full build takes a while; use <code>--only</code> to start with a subset.</p>
+    <div class="codeblock"><pre>swe-duel setup repos                       <span class="c"># → ./repos/&lt;name&gt; at pinned commits</span>
+swe-duel setup docker                      <span class="c"># all images (add --force to rebuild)</span>
+
+<span class="c"># or start small:</span>
+swe-duel setup repos  --only flask jinja chi
+swe-duel setup docker --only flask jinja chi</pre></div>
+    <div class="callout"><b>Offline sandbox.</b> Every validation gate and scoring container runs with networking disabled,
+      so each image is fully self-contained. The agent harness containers keep network access, for their
+      LLM calls.</div>
+    <div class="callout"><b>Harnesses.</b> Coding harneses (mini-swe-agent, OpenHands agent-server, the Codex and Claude Code CLIs) are baked inside all repository images, so that the agents runs inside the same environment that scores it.</div>
+  </section>
+
+  <!-- 04 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="validate">
+    <div class="step-h"><span class="step-n">04</span><h2>Validate the environment</h2></div>
+    <p><code>swe-duel doctor</code> command test-runs the arena's real code paths (install, config,
+      Docker daemon, images, clones, an offline test run, the deterministic scorer, and a replay of sealed
+      gate-regression fixtures) to ensure that the environment is ready to start generating tasks and running tournaments.</p>
+    <div class="codeblock"><pre>swe-duel doctor                     <span class="c"># host + Docker stages, no API spend</span>
+swe-duel doctor --all-repos         <span class="c"># replay every repo's sealed gate fixture (slower)</span>
+swe-duel doctor --live              <span class="c"># + one tiny OpenRouter call per configured model</span>
+swe-duel doctor --live --smoke-agent glm-5.3-flash   <span class="c"># + one real agent session</span></pre></div>
+    <!-- <p>Source checkouts can additionally run the pytest stages documented in the README
+      (<code>pytest tests/ -m "not integration"</code>, <code>tests/test_repo_containers.py</code>,
+      <code>make test-gates</code>, …).</p> -->
+    <!-- <div class="callout ok"> -->
+      <p>Each of the <code>swe-duel doctor ...</code> command fails fast on a missing Docker daemon,
+      a missing <code>swe-duel-&lt;repo&gt;</code> image, or a missing clone, and suggest the exact
+      <code>swe-duel setup …</code> command that fixes it.</p>
+      
+    <!-- </div> -->
+  </section>
+
+  <!-- 05 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="participants">
+    <div class="step-h"><span class="step-n">05</span><h2>Choose the participants</h2></div>
+    <p>A participant is the 4-tuple <b>(model, harness, reasoning effort, provider)</b>. Thus, the same model under
+      a different harness, at a different effort, or served by a different OpenRouter provider counts as a distinct participant.</p>
+
+    <h3>Register models you want to evaluate in <code>config/models.yaml</code></h3>
+    <div class="codeblock"><pre>models:
+  deepseek-v4-flash-0731:                  <span class="c"># nickname displayed on the CLI</span>
+    model_id: "deepseek/deepseek-v4-flash-0731"
+    temperature: 0.2
+    reasoning_efforts: ["max", "high", "low"]       <span class="c"># will become selectable on CLI</span>
+    providers: ["deepseek", "wafer/fast", "fireworks"]   <span class="c"># will become selectable on CLI</span>
+    provider_rate_limits:                  <span class="c"># requests/minute, shared by all workers</span>
+      "deepseek": 60
+      "wafer/fast": 60
+      "fireworks": 40
+      "default": 6                         <span class="c"># auto-route / unlisted providers</span></pre></div>
+
+    <p>No per-token prices are statically configured in the <code>config/models.yaml</code>. 
+      SWE-Duel tracks cost by reading from the per-response metadata for accurate OpenRouter cost reports.</p> 
+    
+    <p>You may add additional OpenRouter providers, and probe their rate limits with real API calls:</p>
+    <div class="codeblock"><pre>swe-duel-probe-rate-limits --models deepseek-v4-flash-0731 --providers fireworks</pre></div>
+
+    <h3>SWE-Duel Harnesses</h3>
+    <div class="tablewrap"><table class="t">
+      <tr><th>Harness ID</th><th>Runtime</th><th>Effort Level Support</th><th>Provider Pin Support</th></tr>
+      <tr><td><code>mini-swe-agent</code></td><td>mini-swe-agent, <code>docker exec</code> into the repo image</td><td>any string in the model's menu</td><td>yes</td></tr>
+      <tr><td><code>openhands</code></td><td>OpenHands SDK agent-server</td><td>any string in the model's menu</td><td>yes</td></tr>
+      <tr><td><code>codex</code></td><td>Codex CLI (<code>codex exec</code>)</td><td>minimal · low · medium · high · xhigh</td><td>no</td></tr>
+      <tr><td><code>claude-code</code></td><td>Claude Code CLI (<code>claude -p</code>)</td><td>no</td><td>no</td></tr>
+    </table></div>
+    <!-- <p>A selection a harness cannot honour (e.g. a provider pin with <code>codex</code>) fails fast rather than being
+      silently dropped. Interactive commands present a paged wizard — model → harness → effort → provider → add
+      another / remove / start — while non-interactive runs take
+      <code>--models</code>/<code>--harnesses</code>/<code>--efforts</code>/<code>--providers</code>, cross-producted.</p> -->
+  </section>
+
+  <!-- 06 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="generate">
+    <div class="step-h"><span class="step-n">06</span><h2>Generate Red tasks</h2></div>
+    <p>In order for participant to enter a tournament or run a match against another participant, 
+      it should generate <b>Red</b> tasks (interchangeably, challenges) for every repository involved in the 
+      match or tournament.
+      <!-- : it first implements a
+      feature (checked by fail-fast feature gates), then embeds a subtle bug, and the result must pass every
+      admission gate — diff shape, feature tests, bug tests, and finally an emulated-Blue self-review.  -->
+      Admitted tasks are stored under <code>data/challenge_bank/</code>.</p>
+    
+      <div class="codeblock"><pre><span class="c"># interactive wizard (needs a TTY)</span>
+swe-duel-generate \
+  --repos jwt helmet java-html-sanitizer cjson flask jinja expressjs java-jwt libexpat chi sqlalchemy simdjson jjwt node-jsonwebtoken csrf \
+  --target-per-repo 1  </pre></div>
+
+    <ul>
+      <li>
+        <b>Task generation's <code>--target-per-repo</code> argument maps to the tournament's <code>--turns_per_player</code> argument</b>
+        (<code>match.turns_per_player</code> in <code>arena.yaml</code>, default 3). Each match draws that many
+        challenges per repository per side, in deterministic bank order.</li>
+      <li><b>Slots are deterministic</b> (<code>1..target</code>). Re-running skips every slot that already has a
+        record (successfully admitted, or failed after <code>challenge_bank.max_generation_attempts</code> attempts), so the
+        command is resume-safe and never re-spends on a finished/exhuasted slot.</li>
+      <li>A slot that does not store an admitted challenge, but is exhausted due to reaching <code>challenge_bank.max_generation_attempts</code> failed attempts will <b>not manifest as error during a match or tournament</b>.
+        Rather, in a match, the opponent is awarded an auto-win that Blue turn.</li>
+    </ul>
+  </section>
+
+  <!-- 07 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="tournament">
+    <div class="step-h"><span class="step-n">07</span><h2>Run a round-robin tournament</h2></div>
+    <p>The round-robin tournament schedules a match between every two participants in the tournament. 
+      A single match spans <b>all</b> selected repositories: the two participants alternate Red and Blue for
+      <code>turns_per_player</code> challenges per repository per side. Blue defenses are cached in
+      <code>data/defenses/</code> per (challenge, Blue participant), so later tournaments reuse the cached 
+      records to save costs.</p>
+    <div class="codeblock"><pre><span class="c"># interactive wizard (needs a TTY)</span>
+swe-duel-tournament-rr \
+  --repos jwt helmet java-html-sanitizer cjson flask jinja expressjs java-jwt libexpat chi sqlalchemy simdjson jjwt node-jsonwebtoken csrf \
+  --turns-per-player 1</pre></div>
+    <p>On start the console UI lists existing <code>round_robin_state_*.json</code> files for the same 
+      repository set and turns-per-player configuration, so you can resume a tournament or start a new one.
+       <!-- you will be asked for the ordering seed (it only
+      shuffles which round each pair surfaces in). It then drops into a REPL: -->
+      Commands for navigating the console UI:
+    </p>
+    <div class="tablewrap"><table class="t">
+      <tr><th>Command</th><th>Effect</th></tr>
+      <tr><td><code>status</code> (<code>s</code>)</td><td>Tournament overview, including the <b>Tournament ID</b> you need in step 08.</td></tr>
+      <tr><td><code>pairings</code> (<code>p</code>)</td><td>Preview the next round's pairings with cached-defense reuse counts.</td></tr>
+      <tr><td><code>next</code> (<code>n</code>)</td><td>Run the next scheduled round under the live progress view.</td></tr>
+      <tr><td><code>all</code> (<code>a</code>)</td><td>Run every remaining match in one parallel batch.</td></tr>
+      <tr><td><code>standings</code> (<code>ls</code>)</td><td>Cumulative points + Elo leaderboard.</td></tr>
+      <tr><td><code>history</code> (<code>h</code>) / <code>history N</code></td><td>Past rounds with outcomes / the Elo table after round N.</td></tr>
+      <tr><td><code>report</code> (<code>r</code>)</td><td>Regenerate report figures.</td></tr>
+      <tr><td><code>quit</code> (<code>q</code>)</td><td>Exit (a final report is produced on the way out).</td></tr>
+    </table></div>
+    <p>State persists to <code>data/tournaments/round_robin_state_&lt;tournament_id&gt;.json</code> and match records
+      to <code>data/matches/</code>, so an interrupted tournament resumes exactly where it stopped. After resuming,
+      the console also offers <b>Add a new participant</b>: newcomers are onboarded with <code>ceil(log2 N)+1</code> matchups
+      against the incumbents via the active sampling algorithm, instead of a matching against the entire incumbent pool.</p>
+    <div class="callout">For a Swiss system, <code>swe-duel-tournament --repos …</code> runs the same REPL but
+      re-pairs every round by score (state in <code>swiss_state_*.json</code>), and re-uses match/defense records from previous tournament(s) to save costs. 
+      <!-- <code>swe-duel-rankings</code> exports both formats. -->
+    </div>
+  </section>
+
+  <!-- 08 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="rankings">
+    <div class="step-h"><span class="step-n">08</span><h2>Export your rankings</h2></div>
+    <p>Once the matches of the tournament are played, export the tournament's standings from <code>./data/</code>.</p>
+    <div class="codeblock"><pre>ls data/tournaments/                 <span class="c"># round_robin_state_&lt;tournament_id&gt;.json</span>
+swe-duel-rankings &lt;tournament_id&gt;
+<span class="c"># Will output to ./rankings/rankings_&lt;tournament_id&gt;.json   (override with --rankings-dir)</span></pre></div>
+    <p>The export is self-contained:</p>
+    <ul>
+      <li><b><code>rankings</code></b>: pinned identity (model, harness, effort, provider), points,
+        matches played, match-level Bradley–Terry and Elo with ranks, TrueSkill μ/σ, and 1,000-draw match-level
+        bootstrap uncertainty (Elo/BT confidence intervals and bootstrap rank distributions).</li>
+      <li><b><code>head_to_head</code></b>: W/L/D per pair, with match ids.</li>
+      <li><b><code>matches</code></b>: the raw claimed match list (endpoints, outcome, timestamp, repositories).</li>
+      <li><b><code>repos</code> + <code>targets_per_repo</code></b>: the exact arena configurations the tournament ran.</li>
+    </ul>
+    <!-- <p>For an Elo table and pairwise matchup matrix across all of <code>data/matches</code>, also run
+      <code>swe-duel-report</code> (needs the report extra: <code>./venv/bin/pip install -e ".[report]"</code>).</p> -->
+    <div class="callout ok"><b>Done.</b> You now have your own rankings from scratch. To let others add entrants
+      to <i>your</i> field, share the rankings export; contributors follow the
+      <a href="submit.html">Submit new entrants</a> guide and you import their zip with
+      <code>swe-duel-tournament-update &lt;submission.zip&gt; --tournament &lt;tournament_id&gt;</code>.</div>
+  </section>
+
+  <section class="notes">
+    <h3>Troubleshooting</h3>
+    <ul>
+      <!-- <li><b>Preflight failure.</b> Run the <code>swe-duel setup …</code> command it prints, or bypass it deliberately with
+        <code>--skip-preflight</code> / <code>SWE_DUEL_SKIP_PREFLIGHT=1</code>.</li> -->
+      <li><b><code>Provider returned error 429</code>.</b> Lower the provider's entry in
+        <code>provider_rate_limits</code> (or probe it with <code>swe-duel-probe-rate-limits</code>), or reduce
+        <code>--max-workers</code>/<code>--match-workers</code>: the configured rate is a budget shared by all workers.
+        Retry chatter is mirrored to <code>data/logs/model_retries.log</code>.</li>
+      <!-- <li><b>Runs ending with <code>exit_status=unknown</code> / repeated "No tool calls found".</b> Responses are being
+        truncated mid-reasoning — raise the arena-wide <code>agent_model.max_tokens</code> in
+        <code>config/arena.yaml</code> to cover the deepest reasoning effort you selected.</li> -->
+      <li><b>Leftover containers.</b> Every container is prefixed <code>swe-duel-</code> and reaped on exit; force-clean
+        stragglers with <code>swe-duel-kill-containers</code>.</li>
+      <!-- <li><b>Adding a repository or harness.</b> See <a href="https://github.com/sweduel/SWE-Duel/blob/main/new_repo.md" target="_blank" rel="noopener">new_repo.md</a>
+        and <a href="https://github.com/sweduel/SWE-Duel/blob/main/harnesses.md" target="_blank" rel="noopener">harnesses.md</a>.</li> -->
+    </ul>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>SWE-Duel · setup and run guide</span>
+    <span><a href="https://github.com/sweduel/SWE-Duel" target="_blank" rel="noopener">github.com/sweduel/SWE-Duel ↗</a></span>
+  </div>
+</footer>
+
+<script>
+
+(function () {
+  "use strict";
+  var cb = document.getElementById("theme-cb");
+  if (!cb) return;
+  var saved = null;
+  try { saved = localStorage.getItem("swe-duel-theme"); } catch (e) {}
+  if (saved === "light") { cb.checked = true; }
+  else if (saved === "dark") { cb.checked = false; }
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+    cb.checked = true;
+  }
+  cb.addEventListener("change", function () {
+    try { localStorage.setItem("swe-duel-theme", cb.checked ? "light" : "dark"); } catch (e) {}
+  });
+})();
+
+(function () {
+  "use strict";
+  Array.prototype.forEach.call(document.querySelectorAll(".codeblock"), function (block) {
+    var pre = block.querySelector("pre");
+    if (!pre || !navigator.clipboard) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy";
+    btn.textContent = "copy";
+    btn.addEventListener("click", function () {
+      var text = Array.prototype.map.call(pre.childNodes, function (n) {
+        return (n.nodeType === 1 && n.classList.contains("c")) ? "" : n.textContent;
+      }).join("").replace(/[ \t]+$/gm, "");
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = "copied";
+        setTimeout(function () { btn.textContent = "copy"; }, 1400);
+      });
+    });
+    block.appendChild(btn);
+  });
+})();
+
+</script>
+</body>
+</html>

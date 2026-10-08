@@ -1,0 +1,90 @@
+scoring:
+  # Legacy fields retained for YAML back-compat; turn scoring is binary
+  # blue = s_regression × s_feature × s_bugfix (no λ weighting).
+  lambda_feature: 0.5
+  lambda_bugfix: 0.5
+
+red_gates:
+  min_lines_added: 5
+  min_lines_removed: 1
+  min_hunks: 1
+  min_assertions_feature: 2
+  min_assertions_bug: 1
+  enable_diff_gate: true
+  enable_lint_gate: false
+  enable_self_review_gate: true
+
+sandbox:
+  timeout_seconds: 180
+  memory_mb: 4096
+
+agent_timeouts:
+  # Wall-clock cap per agent invocation. Once exceeded, the agent's step
+  # loop raises LimitsExceeded and exits cleanly (trajectory is preserved).
+  # Tune these if you observe healthy runs being cut off or stalls running
+  # too long before exit.
+  red_feature_seconds: 1800   # 30 min — exploration + feature design + tests
+  red_bug_seconds: 1800       # 30 min  — narrower scope, focused bug embedding
+  red_self_review_seconds: 1800  # 30 min — emulated-Blue self-review gate
+  blue_seconds: 1800          # 30 min — review + fix + retain feature
+
+agent_steps:
+  # Per-phase step budget (max agent loop iterations) for each agent role.
+  # The step loop exits (LimitsExceeded) once a phase hits its cap.
+  red_feature_steps: 50
+  red_bug_steps: 50
+  red_self_review_steps: 50
+  blue_steps: 50
+
+agent_model:
+  # Arena-wide per-response completion cap for EVERY participant model (mini-swe
+  # `max_tokens` / OpenHands `max_output_tokens`) — uniform across the field by
+  # design, so it lives here rather than per-model in models.yaml.
+  # NOTE: reasoning tokens count against this cap. At the deepest selectable
+  # reasoning effort a truncated response dies BEFORE emitting its tool call
+  # (finish_reason=length, tool_calls=null), which mini-swe-agent reports as
+  # FormatError("No tool calls found") — three consecutive kill the run
+  # (RepeatedFormatError) long before the step limit. 32768 comfortably covers
+  # max-effort reasoning + the action itself for every curated provider
+  # (verified against OpenRouter's models/<id>/endpoints max_completion_tokens).
+  max_tokens: 32768
+
+challenge_bank:
+  target_challenges_per_model_repo: 1
+  max_generation_attempts: 5
+  # How many (model, repo) generation pools to run in parallel. Targets within
+  # a pool stay sequential (so previous_gists diversity hints still work).
+  # Overridable per-run with `generate_challenges.py --max-workers N`.
+  max_workers: 5
+
+match:
+  # Number of challenges each player (a model+harness competitor) defends per
+  # repo per match. A match spans every selected repo, so total turns per side
+  # = turns_per_player × number_of_repos.
+  turns_per_player: 3
+  # How many defense sub-turns to run concurrently within a tournament round.
+  # A round pools every cache-miss defense across all its matches (e.g. 3
+  # matches × 5 repos × 2 sides × turns_per_player) and runs that pool through
+  # a ThreadPoolExecutor of this width. Blue agents and their test executions
+  # are containerized and independent, so they parallelize safely.
+  # Overridable per-run with `run_tournament.py --match-workers N`.
+  max_workers: 5
+
+tournament:
+  schedule: round_robin
+  repos_per_match: 1
+
+rating:
+  elo_k: 32
+  initial_elo: 1000
+  trueskill_initial_mu: 25.0
+  trueskill_initial_sigma: 8.333
+
+paths:
+  # Where all run artifacts are written (challenge bank, defenses, logs,
+  # workspaces, matches, tournament state). Resolution order:
+  #   1. an explicit --output-dir CLI flag
+  #   2. the SWE_DUEL_OUTPUT_DIR environment variable
+  #   3. this value (relative paths resolve against the working directory)
+  #   4. fallback default: ./data
+  output_dir: data

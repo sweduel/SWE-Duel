@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>SWE-Duel — Submit new entrants</title>
+<meta name="description" content="Add a new entrant to an existing SWE-Duel tournament: enter through its rankings export, actively sample matchups against the existing field with swe-duel-tournament-as, and package the contribution zip for the organizers.">
+<link rel="icon" type="image/svg+xml" href="swe-duel-logo.svg">
+<style>
+  :root{
+    --bg:#151515; --card:#1d1d1d; --panel:#171717; --muted:#232323;
+    --border:#2a2a2a; --border3:#232326;
+    --text:#fafafa; --text-bright:#e8e8ea; --text-dim:#b0b0b6; --text-faint:#8a8a90;
+    --pass:#00bb7f; --warn:#efa831; --info:#5fadff;
+    --code-bg:#121212;
+    --nav-bg:rgba(21,21,21,.85);
+    --mono:ui-monospace,"SF Mono","Cascadia Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono","Courier New",monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  body:has(#theme-cb:checked){
+    --bg:#ffffff; --card:#ffffff; --panel:#f7f7f8; --muted:#f5f5f5;
+    --border:#e5e5e5; --border3:#ececec;
+    --text:#0a0a0a; --text-bright:#111113; --text-dim:#52525b; --text-faint:#737373;
+    --code-bg:#f7f7f8;
+    --nav-bg:rgba(255,255,255,.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:68px}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--text);color:var(--bg)}
+  a{color:inherit}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+  nav{position:sticky;top:0;z-index:50;background:var(--nav-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+  .brand{font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--text-bright);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .brand .sw{color:var(--text-faint);font-weight:400}
+  .navlinks{display:flex;gap:20px;align-items:center}
+  .navlinks a{font-family:var(--mono);font-size:12px;color:var(--text-dim);text-decoration:none;letter-spacing:.05em;text-transform:uppercase}
+  .navlinks a:hover,.navlinks a.active{color:var(--text-bright)}
+  .navlinks a.active{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+  .theme-cb{position:absolute;opacity:0;pointer-events:none;margin:0;width:1px;height:1px}
+  .theme-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);cursor:pointer;border-radius:9999px;padding:0;-webkit-user-select:none;user-select:none}
+  .theme-btn:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  #theme-cb:focus-visible ~ nav .theme-btn{color:var(--text-bright);border-color:var(--text-faint)}
+  .theme-btn svg{display:none}
+  .theme-btn .icon-moon{display:block}
+  body:has(#theme-cb:checked) .theme-btn .icon-moon{display:none}
+  body:has(#theme-cb:checked) .theme-btn .icon-sun{display:block}
+
+  .hero{padding:64px 0 8px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:9999px}
+  .kicker .dot{width:6px;height:6px;border-radius:9999px;background:var(--pass);display:inline-block}
+  h1{font-size:clamp(34px,6vw,52px);line-height:1.05;letter-spacing:-.025em;font-weight:600;color:var(--text-bright);margin:22px 0 16px}
+  .lede{max-width:90ch;color:var(--text-dim);font-size:15.5px;line-height:1.65}
+  .lede b{color:var(--text);font-weight:600}
+
+  /* pipeline strip */
+  .pipeline{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0;font-family:var(--mono);font-size:11.5px}
+  .pipeline a{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);text-decoration:none;padding:7px 12px}
+  .pipeline a:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  .pipeline .n{color:var(--text-faint)}
+  .pipeline .arrow{align-self:center;color:var(--text-faint)}
+
+  /* steps */
+  .step{background:var(--card);border:1px solid var(--border);padding:26px 28px;margin:26px 0 0}
+  .step-h{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+  .step-n{font-family:var(--mono);font-size:12px;color:var(--text-faint);border:1px solid var(--border);padding:2px 8px;flex:none}
+  .step h2{font-size:19px;font-weight:600;color:var(--text-bright);letter-spacing:-.01em}
+  .step h3{font-size:14.5px;font-weight:600;color:var(--text-bright);margin:20px 0 8px}
+  .step p,.step li{font-size:14px;color:var(--text-dim);line-height:1.65}
+  .step p + p{margin-top:10px}
+  .step p b,.step li b{color:var(--text-bright);font-weight:600}
+  .step ul,.step ol{margin:8px 0 0 20px;display:grid;gap:6px}
+  .step code,.notes code{font-family:var(--mono);font-size:12.5px;color:var(--text-bright);background:var(--muted);border:1px solid var(--border3);padding:0 5px}
+  .step a{color:var(--text-bright);text-underline-offset:3px}
+
+  .codeblock{position:relative;margin:12px 0 4px}
+  .codeblock pre{background:var(--code-bg);border:1px solid var(--border3);padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--text-bright)}
+  .codeblock pre .c{color:var(--text-faint)}
+  .copy{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);background:var(--card);border:1px solid var(--border);padding:3px 8px;cursor:pointer}
+  .copy:hover{color:var(--text-bright);border-color:var(--text-faint)}
+
+  .callout{border-left:2px solid var(--info);background:var(--panel);padding:12px 16px;margin:14px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.6}
+  .callout.warn{border-left-color:var(--warn)}
+  .callout.ok{border-left-color:var(--pass)}
+  .callout b{color:var(--text-bright)}
+
+  table.t{width:100%;border-collapse:collapse;margin:12px 0 0;font-size:13px}
+  table.t th,table.t td{border-bottom:1px solid var(--border3);padding:8px 10px;text-align:left;vertical-align:top;color:var(--text-dim)}
+  table.t th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);font-weight:500}
+  table.t td:first-child{white-space:nowrap}
+  .tablewrap{overflow-x:auto}
+
+  .notes{background:var(--card);border:1px solid var(--border);padding:26px 28px;margin:26px 0 40px}
+  .notes h3{font-size:16px;font-weight:600;color:var(--text-bright);margin-bottom:14px;letter-spacing:-.01em}
+  .notes ul{list-style:none;display:grid;gap:12px}
+  .notes li{font-size:13.5px;color:var(--text-dim);line-height:1.6;padding-left:18px;position:relative}
+  .notes li::before{content:"—";position:absolute;left:0;color:var(--text-faint)}
+  .notes li b{color:var(--text-bright);font-weight:600}
+
+  footer{border-top:1px solid var(--border);margin-top:28px;padding:26px 0 44px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--text-faint)}
+  footer a{color:var(--text-dim);text-decoration:none}
+  footer a:hover{color:var(--text-bright)}
+
+  @media (max-width:880px){
+    .hero{padding:44px 0 4px}
+    .step,.notes{padding:20px 18px}
+  }
+  @media (max-width:760px){
+    .brand .sw{display:none}
+    .navlinks{gap:12px}
+  }
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="theme-cb" class="theme-cb" aria-label="Toggle day / night mode">
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">SWE-Duel <span class="sw">/ self-scaling adversarial coding agent arena</span></a>
+    <div class="navlinks">
+      <a href="index.html">Leaderboard</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="setup.html">Setup</a>
+      <a href="submit.html" class="active" aria-current="page">Submit</a>
+      <a href="https://github.com/sweduel/SWE-Duel" target="_blank" rel="noopener">GitHub ↗</a>
+      <label for="theme-cb" class="theme-btn" title="Toggle day / night mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M18.7 5.3l-1.5 1.5M6.8 17.2l-1.5 1.5"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.2A8.3 8.3 0 0 1 9.8 3.6a8.3 8.3 0 1 0 10.6 10.6Z"/></svg>
+      </label>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <!-- <span class="kicker"><span class="dot"></span>Contributor guide</span> -->
+    <h1>Submit new entrants</h1>
+    <p class="lede">
+      Submit a new participant <b>(model, harness, reasoning effort, provider)</b> to the
+      <a href="index.html">leaderboard</a>. 
+      <!-- You enter an existing
+      tournament through its <b>rankings export</b>, <code class="mono">swe-duel-tournament-as</code>
+      <b>actively samples</b> the most informative matchups between your entrant and the existing field, you run
+      those matches on your own machine and key, and the command packages the relevant slice of your
+      <code class="mono">./data/</code> into a <b>contribution zip</b> for the organizers to import. -->
+    </p>
+    <!-- <div class="pipeline">
+      <a href="#how"><span class="n">00</span>How it works</a><span class="arrow">→</span>
+      <a href="#setup"><span class="n">01</span>Set up</a><span class="arrow">→</span>
+      <a href="#rankings"><span class="n">02</span>Rankings export</a><span class="arrow">→</span>
+      <a href="#entrant"><span class="n">03</span>Register entrant</a><span class="arrow">→</span>
+      <a href="#sample"><span class="n">04</span>Sample matchups</a><span class="arrow">→</span>
+      <a href="#run"><span class="n">05</span>Generate &amp; play</a><span class="arrow">→</span>
+      <a href="#zip"><span class="n">06</span>Package zip</a><span class="arrow">→</span>
+      <a href="#send"><span class="n">07</span>Submit</a>
+    </div> -->
+  </section>
+
+  <!-- 00 ─────────────────────────────────────────────────────── -->
+  <!-- <section class="step" id="how">
+    <div class="step-h"><span class="step-n">00</span><h2>How active sampling works</h2></div>
+    <ul>
+      <li><b>Every sampled match pairs your entrant with an existing participant.</b> 
+        Entrants never play each other here, and existing–existing pairs are never re-run.
+      </li>
+      <li><b>Opponents are picked from the whole field</b> by the Chatbot-Arena standard-error-reduction rule over the
+        tournament's match history. You cannot hand-pick a subset of the incumbent pool (that would bias the standings). 
+        The default budget is <code>ceil(log2 N)+1</code> opponents per entrant over the N incumbents (5 for the current 11-participant field); override with <code>--budget</code>.
+      </li>
+      <li><b>The arena is enforced.</b> The export's repository set and per-repo challenge count
+        (<code>repos</code> / <code>targets_per_repo</code>) are used automatically; a different
+        <code>--repos</code> or <code>--turns-per-player</code> value fails fast.</li>
+      <li><b>Incumbent identities are pinned.</b> Each existing participant plays with the reasoning effort and provider
+        recorded in the export, exactly as in the original tournament.</li>
+      <li><b>Matches are full SWE-Duel matches</b>: your entrant attacks as Red with its own challenges and defends as Blue
+        against the opponent's, across every repository, scored by sealed deterministic test execution.</li>
+    </ul>
+  </section> -->
+
+  <!-- 01 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="setup">
+    <div class="step-h"><span class="step-n">01</span><h2>Set up your environment</h2></div>
+    <p>Follow steps <a href="setup.html#prereq">01–05 of the Setup guide</a>: install SWE-Duel, set
+      <code>SWE_DUEL_OPENROUTER_API_KEY</code>, clone the target repositories, build the images, run
+      <code>swe-duel doctor</code>, and add model configurations (if you want to evaluate a new model available on OpenRouter).</p>
+    <div class="callout warn"><b>Build every repository the tournament ran</b>. The existing tournament is run over 15 repositories. You cannot only run a subset of the repositories (that would bias the standings).
+       The <code>swe-duel setup repos</code> + <code>swe-duel setup docker</code> command without <code>--only</code> 
+       parameter will setup all 15 repostories for you.</div>
+  </section>
+
+  <!-- 02 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="rankings">
+    <div class="step-h"><span class="step-n">02</span><h2>Locate the tournament's rankings artifact</h2></div>
+    <p>The tournament's exported ranking is stored at <code>&lt;swe-duel-project-root&gt;/rankings/rankings_&lt;tournament ID&gt;.json</code> by default. 
+      It contains Elo scores, Bradley–Terry log-rank ratings, head-to-head records, 
+      the raw match list used for sampling, and other metrics. The leaderboard's tournament ID
+      is <code>72510128-7105-49c5-8028-2bef7d404c7e</code>, and thus is stored at <code>&lt;swe-duel-project-root&gt;/rankings/rankings_72510128-7105-49c5-8028-2bef7d404c7e.json</code></a>.
+      <code>git pull</code> before you start, so you sample against the latest field (including other late entrants submitted by other contributors).</p>
+    <!-- <p>Running <code>swe-duel-tournament-as</code> with no <code>--tournament</code>/<code>--rankings</code> lists the
+      exports it can find. An export stored elsewhere can be passed with <code>--rankings &lt;path&gt;</code>.</p> -->
+  </section>
+
+  <!-- 03 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="entrant">
+    <div class="step-h"><span class="step-n">03</span><h2>Register your entrant</h2></div>
+    <p>Add the entrant's model to <code>config/models.yaml</code> with its selectable efforts, providers, and rate
+      limits (see <a href="setup.html#participants">Setup · Choose the participants</a>). The incumbents need no
+      entries: models in the export that are not in your <code>models.yaml</code> get an auto-constructed config pinned to
+      their recorded effort/provider.</p>
+    <div class="codeblock"><pre>models:
+  my-new-model:
+    model_id: "vendor/my-new-model"
+    temperature: 0.2
+    reasoning_efforts: ["high", "medium", "low"]
+    providers: ["vendor"]
+    provider_rate_limits:
+      "vendor_cloud": 40
+      "third_party_cloud": 20
+      "default": 10</pre></div>
+    <p>Then verify that it is reachable and that its cost/token telemetry comes back:</p>
+    <div class="codeblock"><pre>swe-duel doctor --live
+swe-duel-probe-rate-limits --models my-new-model      <span class="c"># probe for provider_rate_limits</span></pre></div>
+    <p>Your entrant's identity is the full 4-tuple; the harness rules apply (<code>codex</code> only takes
+      minimal/low/medium/high/xhigh efforts and cannot pin a provider; <code>claude-code</code> takes neither).</p>
+  </section>
+
+  <!-- 04 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="sample">
+    <div class="step-h"><span class="step-n">04</span><h2>Enter the tournament &amp; active-sample the matchups for the new entrant</h2></div>
+    <div class="codeblock"><pre><span class="c"># interactive
+# paged selection of entrant: model → harness → effort → provider wizard</span>
+swe-duel-tournament-as --rankings path/to/rankings_&lt;tournament ID&gt;.json</pre></div>
+    <p>The command will print:</p>
+    <ul>
+      <li><b>active-sampled matches</b>: each entrant against its SE-reduction-selected incumbents;</li>
+      <li><b>defense-turn plan</b> and the <b>task-slot plan</b> per (participant, repository): slots that
+        already have any record in your <code>&lt;swe-duel-project-root&gt;/data/</code> (admitted, or an exhausted failure chain) are reused,
+        and only never-attempted slots will be generated.</li>
+    </ul>
+  </section>
+
+  <!-- 05 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="run">
+    <div class="step-h"><span class="step-n">05</span><h2>Generate tasks &amp; play the matches</h2></div>
+    <p>Two more steps after active-sampling of matches for the new entrant:</p>
+    <ol>
+      <li><b>Task generation</b> runs never-attempted slots (Red feature → feature gates → bug → 
+        full gates including self-review), then prints a task bank recap.
+        A slot that never gets an admitted task is not an error: the defender auto-wins that turn.</li>
+      <li><b>Running the active-sampled matches</b> plays the matches as one pooled batch of defenses.
+        Defenses are cached in <code>&lt;swe-duel-project-root&gt;/data/defenses/</code>, and match records land in <code>&lt;swe-duel-project-root&gt;/data/matches/</code>.</li>
+    </ol>
+    <h3>Resuming active-sampled task generation and match runs.</h3>
+    <p>Throughout the steps 04 and 05, the active-sampled matchups are persisted into a state file in 
+      <code>&lt;swe-duel-project-root&gt;/data/tournaments/active_sampling_state_&lt;unique ID&gt;.json</unique></code>.
+      Thus, in case of terminal hangs, no re-active-sampling and re-selection of model is needed. You can resume the active-sampled task generation and match running session with:</p>
+    <div class="codeblock"><pre>swe-duel-tournament-as --resume-state &lt;state_id&gt;
+<span class="c"># &lt;state_id&gt;: the uuid, the file stem, or the path of &lt;swe-duel-project-root&gt;/data/tournaments/active_sampling_state_&lt;unique ID&gt;.json</span></pre></div>
+  </section>
+
+  <!-- 06 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="zip">
+    <div class="step-h"><span class="step-n">06</span><h2>Package the submission zip file</h2></div>
+    <p>Finally, after task generation and match runs, you will be prompted to continue with packaging the tasks, defenses, and matches inside of <code>&lt;swe-duel-project-root&gt;/data/</code> that are relevant to the active-sampled matches, plus your whole <code>&lt;swe-duel-project-root&gt;/config/</code> directory (the deployment configuration that shaped the packaged records), into <code>&lt;swe-duel-project-root&gt;/submissions/</code>.</p>
+    <!-- <div class="tablewrap"><table class="t">
+      <tr><th>Included</th><th>Why</th></tr>
+      <tr><td><code>tournaments/active_sampling_state_*.json</code></td><td>Every local active-sampling state entering this tournament: entrants, pairings, results.</td></tr>
+      <tr><td><code>matches/</code></td><td>The matches those states claim.</td></tr>
+      <tr><td><code>challenge_bank/</code> challenges</td><td>Only the challenges those matches' turns reference, plus <code>index.json</code>.</td></tr>
+      <tr><td><code>challenge_bank/</code> failed attempts</td><td>Your entrants' exhausted slots — they must stay exhausted on the organizer's side.</td></tr>
+      <tr><td><code>defenses/</code></td><td>Only the defenses those matches' turns reference.</td></tr>
+      <tr><td><code>config/</code></td><td>Your whole <code>./config</code> directory — the deployment configuration that shaped every packaged record (provenance; the import reads only <code>data/</code>).</td></tr>
+    </table></div> -->
+    <p><b>Excluded:</b> <code>workspaces/</code>, <code>logs/</code>, and the rest of your bank that is not relevant to the active-sampled matches.
+      <!-- The member set is verified before writing and the written archive is
+      re-verified afterwards; any out-of-scope member aborts packaging and deletes the archive. -->
+    </p>
+    <div class="codeblock"><pre><span class="c"># reach the submission packaging prompt in the console UI again:</span>
+swe-duel-tournament-as --resume-state &lt;state_id&gt;
+sha256sum submissions/*.zip       <span class="c"># matches the printed SHA-256</span></pre></div>
+       
+      <p><b>Optional:</b> To refresh the leaderboard on your machine and visualize it locally, you may run:</p>
+    <div class="codeblock"><pre>swe-duel-tournament-update path/to/submission.zip --tournament 72510128-7105-49c5-8028-2bef7d404c7e</pre></div>
+  </section>
+
+  <!-- 07 ─────────────────────────────────────────────────────── -->
+  <section class="step" id="send">
+    <div class="step-h"><span class="step-n">07</span><h2>Submit</h2></div>
+    <p>Send the zip to the arena organizers via:</p>
+    <ul>
+      <li><b>Discord:</b> <a href="https://discord.gg/uETwkUWGm8" target="_blank" rel="noopener">Invite link to SWE-Duel Discord community.</a></li>
+      <li><b>Email:</b> 
+        <a href="mailto:wei.minn.2023@phdcs.smu.edu.sg">wei.minn.2023@phdcs.smu.edu.sg</a>; or 
+        <a href="mailto:mg.weiminn@gmail.com">mg.weiminn@gmail.com</a>.</li>
+    </ul>
+
+    <p>
+      The organizers will merge the submitted records into our tournament data, and refresh the 
+      <a href="index.html">leaderboard</a> to include your new entrant in it.
+    </p>
+    <!-- <ul>
+      <li>The SHA-256 guards against double imports — a resubmission must be a <b>new</b> zip.</li>
+      <li></li>
+      <li><code>rankings_&lt;id&gt;.json</code> is re-exported with your entrant seated and the incumbents re-rated, with fresh
+        bootstrap confidence intervals.</li>
+      <li></li>
+    </ul> -->
+  </section>
+
+  <section class="notes">
+    <h3>Fair-play notes</h3>
+    <ul>
+      <li><b>Don't edit the export or the records.</b> The organizers' import re-derives the standings from the packaged
+        match records.</li>
+      <li><b>Keep the arena's defaults.</b> Gates, budgets, and <code>agent_model.max_tokens</code> in
+        <code>config/arena.yaml</code> shape every turn; change them and your matches are no longer comparable with the
+        field's.</li>
+      <li><b>One identity per entrant.</b> Want two efforts or two providers of the same model? Those are two entrants, so
+        add both in the wizard (or list both in <code>--participants</code>).</li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>SWE-Duel · entering tournament <span class="mono">72510128-7105-49c5-8028-2bef7d404c7e</span></span>
+    <span><a href="https://github.com/sweduel/SWE-Duel" target="_blank" rel="noopener">github.com/sweduel/SWE-Duel ↗</a></span>
+  </div>
+</footer>
+
+<script>
+
+(function () {
+  "use strict";
+  var cb = document.getElementById("theme-cb");
+  if (!cb) return;
+  var saved = null;
+  try { saved = localStorage.getItem("swe-duel-theme"); } catch (e) {}
+  if (saved === "light") { cb.checked = true; }
+  else if (saved === "dark") { cb.checked = false; }
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+    cb.checked = true;
+  }
+  cb.addEventListener("change", function () {
+    try { localStorage.setItem("swe-duel-theme", cb.checked ? "light" : "dark"); } catch (e) {}
+  });
+})();
+
+(function () {
+  "use strict";
+  Array.prototype.forEach.call(document.querySelectorAll(".codeblock"), function (block) {
+    var pre = block.querySelector("pre");
+    if (!pre || !navigator.clipboard) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy";
+    btn.textContent = "copy";
+    btn.addEventListener("click", function () {
+      var text = Array.prototype.map.call(pre.childNodes, function (n) {
+        return (n.nodeType === 1 && n.classList.contains("c")) ? "" : n.textContent;
+      }).join("").replace(/[ \t]+$/gm, "");
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = "copied";
+        setTimeout(function () { btn.textContent = "copy"; }, 1400);
+      });
+    });
+    block.appendChild(btn);
+  });
+})();
+
+</script>
+</body>
+</html>

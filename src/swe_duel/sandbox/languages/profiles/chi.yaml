@@ -1,0 +1,2 @@
+language: go
+import_path: github.com/go-chi/chi/v5

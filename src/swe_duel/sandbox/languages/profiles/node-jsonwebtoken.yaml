@@ -1,0 +1,4 @@
+language: node
+test_runner: mocha
+ext: test.js
+source_import_example: "const jwt = require('..');"

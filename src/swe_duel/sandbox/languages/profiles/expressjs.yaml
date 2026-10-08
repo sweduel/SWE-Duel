@@ -1,0 +1,5 @@
+language: node
+test_runner: mocha
+ext: test.js
+require: test/support/env
+source_import_example: "const express = require('../lib/express');"

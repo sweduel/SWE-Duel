@@ -1,0 +1,4 @@
+language: node
+test_runner: node_test
+ext: test.ts
+source_import_example: 'import x from "../middlewares/...";'

@@ -1,0 +1,18 @@
+language: c
+build_method: cmake
+# simdjson is C++17; the C adapter honours compiler/std/test_ext so injected
+# tests compile with g++ rather than gcc -std=c99.
+compiler: g++
+std: c++17
+test_ext: cpp
+cmake_source_root: "."
+cmake_target: simdjson
+cmake_extra_args: "-DSIMDJSON_DEVELOPER_MODE=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release"
+cmake_build_dir: /tmp/simdjson-b
+include_flags: "-Iinclude -Isrc"
+link_flags: "-L/tmp/simdjson-b -lsimdjson -lpthread -lstdc++"
+header: simdjson.h
+prompt_hints:
+  include_directive: '#include "simdjson.h"'
+  source_dir: src
+  note: "simdjson is C++17 — write injected tests as C++ (not pure C)."

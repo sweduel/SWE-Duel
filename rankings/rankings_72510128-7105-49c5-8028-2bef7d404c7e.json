@@ -1,0 +1,1608 @@
+{
+  "tournament_id": "72510128-7105-49c5-8028-2bef7d404c7e",
+  "format": "round_robin",
+  "source": "data/tournaments/round_robin_state_72510128-7105-49c5-8028-2bef7d404c7e.json + 55 claimed match(es) from data/matches (+5 imported contribution match(es))",
+  "exported_at": "2026-10-08T05:24:11.715754+00:00",
+  "repos": [
+    "jwt",
+    "helmet",
+    "java-html-sanitizer",
+    "cjson",
+    "flask",
+    "jinja",
+    "expressjs",
+    "java-jwt",
+    "libexpat",
+    "chi",
+    "sqlalchemy",
+    "simdjson",
+    "jjwt",
+    "node-jsonwebtoken",
+    "csrf"
+  ],
+  "targets_per_repo": 1,
+  "rankings": [
+    {
+      "rank": 1,
+      "model": "openai/gpt-5.5",
+      "harness": "codex",
+      "reasoning_effort": "medium",
+      "provider": "(OpenRouter auto-route)",
+      "points": 8.5,
+      "matches_played": 11,
+      "bradley_terry": 2.085,
+      "bradley_terry_rank": 2,
+      "elo": 1572.3,
+      "elo_rank": 2,
+      "trueskill_mu": 31.88,
+      "trueskill_sigma": 3.23,
+      "elo_ci": [
+        1509.1,
+        1638.7
+      ],
+      "bradley_terry_ci": [
+        0.615,
+        8.717
+      ],
+      "contested_bt": 0.143,
+      "contested_bt_ci": [
+        -0.099,
+        0.366
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 3,
+      "bootstrap_rank_interval": [
+        1,
+        6
+      ],
+      "bootstrap_rank_histogram": [
+        0.043,
+        0.416,
+        0.267,
+        0.159,
+        0.068,
+        0.033,
+        0.01,
+        0.003,
+        0.001,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "rank": 2,
+      "model": "anthropic/claude-opus-4.8",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "high",
+      "provider": "(OpenRouter auto-route)",
+      "points": 8.0,
+      "matches_played": 11,
+      "bradley_terry": 1.728,
+      "bradley_terry_rank": 3,
+      "elo": 1563.4,
+      "elo_rank": 3,
+      "trueskill_mu": 30.95,
+      "trueskill_sigma": 3.33,
+      "elo_ci": [
+        1488.1,
+        1635.8
+      ],
+      "bradley_terry_ci": [
+        0.253,
+        7.681
+      ],
+      "contested_bt": 0.05,
+      "contested_bt_ci": [
+        -0.17,
+        0.26
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 3,
+      "bootstrap_rank_interval": [
+        1,
+        7
+      ],
+      "bootstrap_rank_histogram": [
+        0.034,
+        0.247,
+        0.259,
+        0.182,
+        0.142,
+        0.077,
+        0.041,
+        0.017,
+        0.001,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "rank": 3,
+      "model": "openai/gpt-5.5",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "medium",
+      "provider": "(OpenRouter auto-route)",
+      "points": 6.5,
+      "matches_played": 9,
+      "bradley_terry": 1.4,
+      "bradley_terry_rank": 4,
+      "elo": 1556.1,
+      "elo_rank": 4,
+      "trueskill_mu": 29.78,
+      "trueskill_sigma": 3.1,
+      "elo_ci": [
+        1493.4,
+        1616.1
+      ],
+      "bradley_terry_ci": [
+        -1.469,
+        6.495
+      ],
+      "contested_bt": 0.126,
+      "contested_bt_ci": [
+        -0.107,
+        0.39
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 4,
+      "bootstrap_rank_interval": [
+        2,
+        8
+      ],
+      "bootstrap_rank_histogram": [
+        0.017,
+        0.158,
+        0.207,
+        0.217,
+        0.18,
+        0.115,
+        0.069,
+        0.037,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "rank": 4,
+      "model": "moonshotai/kimi-k2.7-code",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": null,
+      "provider": "(OpenRouter auto-route)",
+      "points": 6.0,
+      "matches_played": 9,
+      "bradley_terry": 1.085,
+      "bradley_terry_rank": 5,
+      "elo": 1537.5,
+      "elo_rank": 5,
+      "trueskill_mu": 27.91,
+      "trueskill_sigma": 3.02,
+      "elo_ci": [
+        1476.3,
+        1601.3
+      ],
+      "bradley_terry_ci": [
+        -1.131,
+        5.871
+      ],
+      "contested_bt": 0.095,
+      "contested_bt_ci": [
+        -0.144,
+        0.347
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 5,
+      "bootstrap_rank_interval": [
+        2,
+        8
+      ],
+      "bootstrap_rank_histogram": [
+        0.005,
+        0.085,
+        0.154,
+        0.204,
+        0.182,
+        0.179,
+        0.122,
+        0.06,
+        0.006,
+        0.002,
+        0.0,
+        0.001
+      ]
+    },
+    {
+      "rank": 5,
+      "model": "deepseek/deepseek-v4-pro",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "high",
+      "provider": "(OpenRouter auto-route)",
+      "points": 5.5,
+      "matches_played": 9,
+      "bradley_terry": 0.774,
+      "bradley_terry_rank": 6,
+      "elo": 1527.7,
+      "elo_rank": 6,
+      "trueskill_mu": 27.47,
+      "trueskill_sigma": 3.26,
+      "elo_ci": [
+        1456.2,
+        1596.5
+      ],
+      "bradley_terry_ci": [
+        -1.115,
+        4.906
+      ],
+      "contested_bt": 0.03,
+      "contested_bt_ci": [
+        -0.188,
+        0.269
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 6,
+      "bootstrap_rank_interval": [
+        2,
+        8
+      ],
+      "bootstrap_rank_histogram": [
+        0.002,
+        0.027,
+        0.054,
+        0.13,
+        0.227,
+        0.273,
+        0.187,
+        0.092,
+        0.007,
+        0.001,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "rank": 6,
+      "model": "z-ai/glm-5.2",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "high",
+      "provider": "(OpenRouter auto-route)",
+      "points": 5.0,
+      "matches_played": 9,
+      "bradley_terry": 0.456,
+      "bradley_terry_rank": 7,
+      "elo": 1513.6,
+      "elo_rank": 7,
+      "trueskill_mu": 25.61,
+      "trueskill_sigma": 3.17,
+      "elo_ci": [
+        1447.2,
+        1571.1
+      ],
+      "bradley_terry_ci": [
+        -1.558,
+        3.8
+      ],
+      "contested_bt": 0.063,
+      "contested_bt_ci": [
+        -0.168,
+        0.316
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 6,
+      "bootstrap_rank_interval": [
+        3,
+        8
+      ],
+      "bootstrap_rank_histogram": [
+        0.002,
+        0.016,
+        0.044,
+        0.086,
+        0.155,
+        0.23,
+        0.295,
+        0.154,
+        0.016,
+        0.001,
+        0.0,
+        0.001
+      ]
+    },
+    {
+      "rank": 6,
+      "model": "z-ai/glm-5.3-flash",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "high",
+      "provider": "z-ai",
+      "points": 5.0,
+      "matches_played": 5,
+      "bradley_terry": 8.049,
+      "bradley_terry_rank": 1,
+      "elo": 1573.5,
+      "elo_rank": 1,
+      "trueskill_mu": 36.63,
+      "trueskill_sigma": 4.44,
+      "elo_ci": [
+        1518.0,
+        1625.3
+      ],
+      "bradley_terry_ci": [
+        2.643,
+        13.26
+      ],
+      "contested_bt": 0.487,
+      "contested_bt_ci": [
+        0.147,
+        0.859
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 992,
+      "bootstrap_median_rank": 1,
+      "bootstrap_rank_interval": [
+        1,
+        4
+      ],
+      "bootstrap_rank_histogram": [
+        0.9042,
+        0.0514,
+        0.0111,
+        0.0091,
+        0.0081,
+        0.006,
+        0.004,
+        0.005,
+        0.001,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "rank": 7,
+      "model": "qwen/qwen3.7-max",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": null,
+      "provider": "(OpenRouter auto-route)",
+      "points": 4.0,
+      "matches_played": 10,
+      "bradley_terry": -0.237,
+      "bradley_terry_rank": 8,
+      "elo": 1467.9,
+      "elo_rank": 8,
+      "trueskill_mu": 23.22,
+      "trueskill_sigma": 3.12,
+      "elo_ci": [
+        1412.7,
+        1538.4
+      ],
+      "bradley_terry_ci": [
+        -2.704,
+        2.443
+      ],
+      "contested_bt": -0.058,
+      "contested_bt_ci": [
+        -0.286,
+        0.176
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 8,
+      "bootstrap_rank_interval": [
+        5,
+        9
+      ],
+      "bootstrap_rank_histogram": [
+        0.0,
+        0.0,
+        0.004,
+        0.012,
+        0.037,
+        0.077,
+        0.261,
+        0.55,
+        0.049,
+        0.006,
+        0.0,
+        0.004
+      ]
+    },
+    {
+      "rank": 8,
+      "model": "anthropic/claude-opus-4.8",
+      "harness": "claude-code",
+      "reasoning_effort": null,
+      "provider": "(OpenRouter auto-route)",
+      "points": 3.0,
+      "matches_played": 10,
+      "bradley_terry": -2.136,
+      "bradley_terry_rank": 9,
+      "elo": 1451.5,
+      "elo_rank": 9,
+      "trueskill_mu": 20.25,
+      "trueskill_sigma": 3.17,
+      "elo_ci": [
+        1385.1,
+        1509.8
+      ],
+      "bradley_terry_ci": [
+        -7.26,
+        0.674
+      ],
+      "contested_bt": -0.369,
+      "contested_bt_ci": [
+        -0.624,
+        -0.154
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 9,
+      "bootstrap_rank_interval": [
+        8,
+        11
+      ],
+      "bootstrap_rank_histogram": [
+        0.0,
+        0.0,
+        0.0,
+        0.001,
+        0.001,
+        0.01,
+        0.011,
+        0.077,
+        0.788,
+        0.085,
+        0.021,
+        0.006
+      ]
+    },
+    {
+      "rank": 9,
+      "model": "nvidia/nemotron-3-ultra-550b-a55b",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "high",
+      "provider": "(OpenRouter auto-route)",
+      "points": 2.0,
+      "matches_played": 10,
+      "bradley_terry": -3.331,
+      "bradley_terry_rank": 10,
+      "elo": 1424.2,
+      "elo_rank": 10,
+      "trueskill_mu": 15.92,
+      "trueskill_sigma": 3.45,
+      "elo_ci": [
+        1369.2,
+        1485.2
+      ],
+      "bradley_terry_ci": [
+        -13.19,
+        -1.826
+      ],
+      "contested_bt": 0.103,
+      "contested_bt_ci": [
+        -0.143,
+        0.37
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 10,
+      "bootstrap_rank_interval": [
+        9,
+        12
+      ],
+      "bootstrap_rank_histogram": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.004,
+        0.084,
+        0.686,
+        0.161,
+        0.065
+      ]
+    },
+    {
+      "rank": 10,
+      "model": "minimax/minimax-m3",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": null,
+      "provider": "(OpenRouter auto-route)",
+      "points": 1.0,
+      "matches_played": 11,
+      "bradley_terry": -4.589,
+      "bradley_terry_rank": 11,
+      "elo": 1388.9,
+      "elo_rank": 12,
+      "trueskill_mu": 13.6,
+      "trueskill_sigma": 3.78,
+      "elo_ci": [
+        1324.2,
+        1453.7
+      ],
+      "bradley_terry_ci": [
+        -9.102,
+        -2.865
+      ],
+      "contested_bt": 0.019,
+      "contested_bt_ci": [
+        -0.251,
+        0.281
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 1000,
+      "bootstrap_median_rank": 11,
+      "bootstrap_rank_interval": [
+        9,
+        12
+      ],
+      "bootstrap_rank_histogram": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.001,
+        0.047,
+        0.183,
+        0.472,
+        0.297
+      ]
+    },
+    {
+      "rank": 11,
+      "model": "google/gemini-3.1-pro-preview",
+      "harness": "mini-swe-agent",
+      "reasoning_effort": "medium",
+      "provider": "(OpenRouter auto-route)",
+      "points": 0.5,
+      "matches_played": 6,
+      "bradley_terry": -5.284,
+      "bradley_terry_rank": 12,
+      "elo": 1423.4,
+      "elo_rank": 11,
+      "trueskill_mu": 12.95,
+      "trueskill_sigma": 3.97,
+      "elo_ci": [
+        1376.7,
+        1480.8
+      ],
+      "bradley_terry_ci": [
+        -13.314,
+        -3.06
+      ],
+      "contested_bt": -0.689,
+      "contested_bt_ci": [
+        -1.05,
+        -0.356
+      ],
+      "bootstrap_draws": 1000,
+      "bootstrap_ranked": 998,
+      "bootstrap_median_rank": 12,
+      "bootstrap_rank_interval": [
+        10,
+        12
+      ],
+      "bootstrap_rank_histogram": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0361,
+        0.3467,
+        0.6172
+      ]
+    }
+  ],
+  "head_to_head": [
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "45b04dba-2744-4fd6-a7c3-c7a71c4208e3"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "e99f876b-a63a-48cc-9b93-39b6792618ad"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "48a2b6e0-3ce7-4e26-80c4-bd5d40e1742b"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "minimax/minimax-m3#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "99ebd833-fc10-4b43-8124-51590bb07dc5"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "74e7f459-fe54-49d9-9b5d-2a0174eefba3"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "c92f0fb1-8616-4f02-a383-d4bedf9db97e"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "1c6fa7ac-afa0-4115-8595-2381cc8dab5b"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "2bad18cf-84e1-435e-a1b2-6e30eb6efdd1"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "2aa00211-3477-48a1-9ebe-72a6ec7a33b6"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#claude-code",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "97e88b2e-16ec-416c-97b3-ff7d2c56aaac"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "7ab5b9ae-4822-4767-9d7c-bfe4bd530824"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "3e8a60f0-7243-4321-a51b-d3794c9575ea"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "minimax/minimax-m3#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "48981ebb-1b21-41d3-b79e-136978713156"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "b95042d3-777c-4939-a0bb-3314aa9b54bb"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "b1aee6a5-a73f-4315-a84f-be3b92b4e7ab"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "9def8938-0a2b-4cef-8de9-d08353c938ba"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "0dffab39-db9b-45c2-ba40-83907fbf66af"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "1d30ed9d-bbc9-4876-a1f8-aac269aae19d"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "c37319dc-d9f0-4d70-8e6a-96f028428c40"
+      ]
+    },
+    {
+      "a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "b": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "ec71a45b-71e9-49e2-a560-ddece7cefdfd"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "minimax/minimax-m3#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "67b046e7-4301-4864-beaf-72c385cc7e3d"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "7c5ce95f-c73c-4f17-8208-bbb51fff7315"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "f794460a-770a-4cd7-9ea0-d035d8f10beb"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "bf7de11f-b205-4858-8cd2-fc8dd6f9d53b"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "d940b7d3-0f2f-4bfb-affe-a04b25e063b5"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "7d3639a5-b04a-4961-8536-5101254a8cdd"
+      ]
+    },
+    {
+      "a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "be6efa1d-3bc1-4fb8-b804-b1f8ddbce8a1"
+      ]
+    },
+    {
+      "a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "b": "minimax/minimax-m3#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "6db564b0-416e-401a-b679-c0f32bfed454"
+      ]
+    },
+    {
+      "a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "681f0171-4066-42e7-81f8-7613a70e3633"
+      ]
+    },
+    {
+      "a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "3114b960-bbbf-4b0d-8163-c8142ec0cf8a"
+      ]
+    },
+    {
+      "a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "b": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "93f1fc52-1695-4dac-8c77-025f36d6c9a4"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "4a9be3c3-e444-435a-be48-2da6e3c58aa0"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "430b1554-09a6-42bc-9afb-54dd056d6712"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "da782572-9ed3-49b5-b3b9-aabc49c6c816"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "115f3dc8-e5af-4fa3-86d2-ef12304084b4"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "efedbb4e-05ec-4d2a-81ee-89de92c54d0c"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "4e8a8986-8274-4054-96c1-96d77f69c9b4"
+      ]
+    },
+    {
+      "a": "minimax/minimax-m3#mini-swe-agent",
+      "b": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "3ab64425-593c-408d-ac6b-cca53785c39a"
+      ]
+    },
+    {
+      "a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "86c9869d-ec90-469d-b3f3-fa1d4605e533"
+      ]
+    },
+    {
+      "a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "9fd47278-5623-494c-a108-a6c64bb26b0e"
+      ]
+    },
+    {
+      "a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "73836494-ce5f-4a20-975c-53b38ff5202c"
+      ]
+    },
+    {
+      "a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "10f94794-99ee-47eb-9d13-903e09890e61"
+      ]
+    },
+    {
+      "a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "20c34c26-6438-42db-acde-af0d0d9cf50c"
+      ]
+    },
+    {
+      "a": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "b": "openai/gpt-5.5#codex#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "befc20d1-5422-4f92-954d-504d0423773e"
+      ]
+    },
+    {
+      "a": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "77179f91-6881-41f6-a93a-ed200f469282"
+      ]
+    },
+    {
+      "a": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "b1e69a82-c5f1-43e5-bdbf-315111d5e445"
+      ]
+    },
+    {
+      "a": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "94a6f3c6-3d60-40ad-853a-600d4ccf9749"
+      ]
+    },
+    {
+      "a": "openai/gpt-5.5#codex#medium#",
+      "b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "b27b8656-7dac-4a46-8a89-a07f06009b6a"
+      ]
+    },
+    {
+      "a": "openai/gpt-5.5#codex#medium#",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "08924712-404a-494d-8412-179a3641b715"
+      ]
+    },
+    {
+      "a": "openai/gpt-5.5#codex#medium#",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 1,
+      "b_wins": 0,
+      "draws": 0,
+      "match_ids": [
+        "2d5e59a0-ecae-4f03-ad90-f2f9da2ffb7c"
+      ]
+    },
+    {
+      "a": "openai/gpt-5.5#codex#medium#",
+      "b": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "d7e99084-0488-494d-87cd-c78f90a0ce56"
+      ]
+    },
+    {
+      "a": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "b": "qwen/qwen3.7-max#mini-swe-agent",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "051bfb4a-8340-4db9-8001-376558d2e65c"
+      ]
+    },
+    {
+      "a": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "1d8b6f6c-a061-4a32-8dee-f0852a43c2c0"
+      ]
+    },
+    {
+      "a": "qwen/qwen3.7-max#mini-swe-agent",
+      "b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "a_wins": 0,
+      "b_wins": 0,
+      "draws": 1,
+      "match_ids": [
+        "36b61164-afe6-49d9-a2f3-decdae9a3a76"
+      ]
+    },
+    {
+      "a": "qwen/qwen3.7-max#mini-swe-agent",
+      "b": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "a_wins": 0,
+      "b_wins": 1,
+      "draws": 0,
+      "match_ids": [
+        "93c78960-f99a-4fa9-b87c-6914e2df88fe"
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "match_id": "4a9be3c3-e444-435a-be48-2da6e3c58aa0",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T15:19:58.731534+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "b1e69a82-c5f1-43e5-bdbf-315111d5e445",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T15:19:58.739290+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "45b04dba-2744-4fd6-a7c3-c7a71c4208e3",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T15:19:58.748009+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "1d8b6f6c-a061-4a32-8dee-f0852a43c2c0",
+      "model_a": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "model_b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T15:19:58.759327+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "bf7de11f-b205-4858-8cd2-fc8dd6f9d53b",
+      "model_a": "openai/gpt-5.5#codex#medium#",
+      "model_b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T15:19:58.766627+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "86c9869d-ec90-469d-b3f3-fa1d4605e533",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T16:22:31.843606+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "48981ebb-1b21-41d3-b79e-136978713156",
+      "model_a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T16:22:31.856219+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "051bfb4a-8340-4db9-8001-376558d2e65c",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T16:22:31.868652+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "e99f876b-a63a-48cc-9b93-39b6792618ad",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T16:22:31.883427+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "2d5e59a0-ecae-4f03-ad90-f2f9da2ffb7c",
+      "model_a": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "model_b": "openai/gpt-5.5#codex#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T16:22:31.895286+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "b95042d3-777c-4939-a0bb-3314aa9b54bb",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.608698+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "77179f91-6881-41f6-a93a-ed200f469282",
+      "model_a": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.616809+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "67b046e7-4301-4864-beaf-72c385cc7e3d",
+      "model_a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.622454+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "08924712-404a-494d-8412-179a3641b715",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "openai/gpt-5.5#codex#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.628301+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "97e88b2e-16ec-416c-97b3-ff7d2c56aaac",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.635907+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "73836494-ce5f-4a20-975c-53b38ff5202c",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.643690+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "7ab5b9ae-4822-4767-9d7c-bfe4bd530824",
+      "model_a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.651004+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "befc20d1-5422-4f92-954d-504d0423773e",
+      "model_a": "openai/gpt-5.5#codex#medium#",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.659023+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "4e8a8986-8274-4054-96c1-96d77f69c9b4",
+      "model_a": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.664832+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "2aa00211-3477-48a1-9ebe-72a6ec7a33b6",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "anthropic/claude-opus-4.8#claude-code",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.670285+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "7c5ce95f-c73c-4f17-8208-bbb51fff7315",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T22:18:21.678657+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "b27b8656-7dac-4a46-8a89-a07f06009b6a",
+      "model_a": "openai/gpt-5.5#codex#medium#",
+      "model_b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.686374+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "c37319dc-d9f0-4d70-8e6a-96f028428c40",
+      "model_a": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.693725+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "c92f0fb1-8616-4f02-a383-d4bedf9db97e",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T22:18:21.701346+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "efedbb4e-05ec-4d2a-81ee-89de92c54d0c",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.707200+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "9fd47278-5623-494c-a108-a6c64bb26b0e",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "openai/gpt-5.5#codex#medium#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T22:18:21.712939+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "be6efa1d-3bc1-4fb8-b804-b1f8ddbce8a1",
+      "model_a": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "model_b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.720467+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "2bad18cf-84e1-435e-a1b2-6e30eb6efdd1",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T22:18:21.728127+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "1d30ed9d-bbc9-4876-a1f8-aac269aae19d",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.735396+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "430b1554-09a6-42bc-9afb-54dd056d6712",
+      "model_a": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.743405+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "20c34c26-6438-42db-acde-af0d0d9cf50c",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.746975+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "1c6fa7ac-afa0-4115-8595-2381cc8dab5b",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "openai/gpt-5.5#codex#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.754213+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "7d3639a5-b04a-4961-8536-5101254a8cdd",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.761546+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "115f3dc8-e5af-4fa3-86d2-ef12304084b4",
+      "model_a": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.769369+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "b1aee6a5-a73f-4315-a84f-be3b92b4e7ab",
+      "model_a": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.775025+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "74e7f459-fe54-49d9-9b5d-2a0174eefba3",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "anthropic/claude-opus-4.8#claude-code",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.780613+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "36b61164-afe6-49d9-a2f3-decdae9a3a76",
+      "model_a": "qwen/qwen3.7-max#mini-swe-agent",
+      "model_b": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "outcome": "draw",
+      "timestamp": "2026-07-24T22:18:21.787950+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "da782572-9ed3-49b5-b3b9-aabc49c6c816",
+      "model_a": "openai/gpt-5.5#codex#medium#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.795517+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "f794460a-770a-4cd7-9ea0-d035d8f10beb",
+      "model_a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.801025+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "0dffab39-db9b-45c2-ba40-83907fbf66af",
+      "model_a": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.806733+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "10f94794-99ee-47eb-9d13-903e09890e61",
+      "model_a": "moonshotai/kimi-k2.7-code#mini-swe-agent",
+      "model_b": "qwen/qwen3.7-max#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.814120+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "99ebd833-fc10-4b43-8124-51590bb07dc5",
+      "model_a": "anthropic/claude-opus-4.8#claude-code",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.821587+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "94a6f3c6-3d60-40ad-853a-600d4ccf9749",
+      "model_a": "z-ai/glm-5.2#mini-swe-agent#high#",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.827381+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "9def8938-0a2b-4cef-8de9-d08353c938ba",
+      "model_a": "openai/gpt-5.5#codex#medium#",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-07-24T22:18:21.832691+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "d940b7d3-0f2f-4bfb-affe-a04b25e063b5",
+      "model_a": "deepseek/deepseek-v4-pro#mini-swe-agent#high#",
+      "model_b": "openai/gpt-5.5#mini-swe-agent#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-24T22:18:21.840413+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "6db564b0-416e-401a-b679-c0f32bfed454",
+      "model_a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-25T03:20:53.053684+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "681f0171-4066-42e7-81f8-7613a70e3633",
+      "model_a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "model_b": "nvidia/nemotron-3-ultra-550b-a55b#mini-swe-agent#high#",
+      "outcome": "draw",
+      "timestamp": "2026-07-25T03:20:53.063003+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "3e8a60f0-7243-4321-a51b-d3794c9575ea",
+      "model_a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-25T03:20:53.071586+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "3114b960-bbbf-4b0d-8163-c8142ec0cf8a",
+      "model_a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "model_b": "openai/gpt-5.5#codex#medium#",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-25T03:20:53.082636+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "48a2b6e0-3ce7-4e26-80c4-bd5d40e1742b",
+      "model_a": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "model_b": "anthropic/claude-opus-4.8#claude-code",
+      "outcome": "model_b_wins",
+      "timestamp": "2026-07-25T03:20:53.089456+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "93f1fc52-1695-4dac-8c77-025f36d6c9a4",
+      "model_a": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "model_b": "google/gemini-3.1-pro-preview#mini-swe-agent#medium#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-10-06T12:57:43.812553+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "3ab64425-593c-408d-ac6b-cca53785c39a",
+      "model_a": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "model_b": "minimax/minimax-m3#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-10-06T12:57:43.817806+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "ec71a45b-71e9-49e2-a560-ddece7cefdfd",
+      "model_a": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "model_b": "anthropic/claude-opus-4.8#mini-swe-agent#high#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-10-06T12:57:43.821503+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "93c78960-f99a-4fa9-b87c-6914e2df88fe",
+      "model_a": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "model_b": "qwen/qwen3.7-max#mini-swe-agent",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-10-06T12:57:43.827344+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    },
+    {
+      "match_id": "d7e99084-0488-494d-87cd-c78f90a0ce56",
+      "model_a": "z-ai/glm-5.3-flash#mini-swe-agent#high#z-ai",
+      "model_b": "openai/gpt-5.5#codex#medium#",
+      "outcome": "model_a_wins",
+      "timestamp": "2026-10-06T12:57:43.833125+00:00",
+      "repo_name": "jwt,helmet,java-html-sanitizer,cjson,flask,jinja,expressjs,java-jwt,libexpat,chi,sqlalchemy,simdjson,jjwt,node-jsonwebtoken,csrf"
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swe-duel"
+version = "0.3.0"
+description = "Adversarial Coding Agent Arena — contamination-proof LLM coding benchmark"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Wei Minn", email = "mg.weiminn@gmail.com" }]
+keywords = ["llm", "benchmark", "agents", "red-team", "evaluation", "contamination"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "jinja2>=3.1",
+    "docker>=7.0",
+    "unidiff>=0.7",
+    "mini-swe-agent>=0.1",
+    "questionary>=2.0",
+    "rich>=13.0",
+    "trueskill>=0.4",
+    "networkx>=3.0",
+    # OpenHands agent harness. NOTE: openhands-sdk pulls `lmnr` (Laminar
+    # telemetry), which hard-pins opentelemetry-semantic-conventions==0.60b1;
+    # pip's resolver cannot find the matching otel trio on its own
+    # (ResolutionImpossible), so they are pinned explicitly here — mirrors
+    # the bundled swe_duel/docker/openhands-constraints.txt.
+    "openhands-sdk==1.28.1",
+    "openhands-tools==1.28.1",
+    "openhands-workspace==1.28.1",
+    "opentelemetry-instrumentation==0.60b1",
+    "opentelemetry-semantic-conventions==0.60b1",
+    "opentelemetry-instrumentation-threading==0.60b1",
+]
+
+[project.optional-dependencies]
+# Dev/test tooling for working on swe-duel itself (the pytest plugin is wired
+# via addopts, so the test suite runs only with this extra installed).
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "types-docker>=7.0",
+    "pytest>=8.0",
+    "pytest-json-report>=1.5",
+    "pytest-xdist>=3.5",
+]
+# Figure/table generation for `swe-duel-report` (build_report.py).
+report = [
+    "matplotlib>=3.8",
+    "numpy>=1.26",
+]
+
+[project.urls]
+Homepage = "https://github.com/anonymize_username/Adversarial-Coding-Agent-Arena"
+Repository = "https://github.com/anonymize_username/Adversarial-Coding-Agent-Arena"
+
+[project.scripts]
+swe-duel = "swe_duel.cli.main:main"
+swe-duel-init = "swe_duel.cli.init:main"
+swe-duel-setup = "swe_duel.cli.setup:main"
+swe-duel-doctor = "swe_duel.cli.doctor:main"
+swe-duel-generate = "swe_duel.cli.generate_challenges:main"
+swe-duel-match = "swe_duel.cli.run_match:main"
+swe-duel-tournament = "swe_duel.cli.run_tournament:main"
+swe-duel-tournament-rr = "swe_duel.cli.run_tournament_round_robin:main"
+swe-duel-tournament-as = "swe_duel.cli.run_tournament_active_sampling:main"
+swe-duel-tournament-update = "swe_duel.cli.tournament_update:main"
+swe-duel-rankings = "swe_duel.cli.export_rankings:main"
+swe-duel-ablation = "swe_duel.cli.run_tournament_harness_ablation:main"
+swe-duel-evaluate = "swe_duel.cli.evaluate_blue:main"
+swe-duel-report = "swe_duel.cli.build_report:main"
+swe-duel-kill-containers = "swe_duel.cli.kill_containers:main"
+swe-duel-probe-rate-limits = "swe_duel.cli.probe_provider_rate_limits:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["swe_duel*"]
+# tests/fixtures shipped as package data must not be discovered as importable
+# packages (the mock repo contains its own src/calculator package).
+exclude = ["swe_duel.validation.fixtures*"]
+
+[tool.setuptools.package-data]
+# Docker build context (Dockerfiles + shared helper scripts) and the default
+# arena configs ship inside the wheel so `swe-duel setup docker` / `swe-duel init`
+# work from a clean pip install.
+"swe_duel" = ["docker/**/*"]
+"swe_duel.agents" = ["prompts/*"]
+"swe_duel.sandbox.languages" = ["profiles/*.yaml"]
+"swe_duel.validation" = ["fixtures/**/*"]
+"swe_duel.config_defaults" = ["*.yaml", "repos/*.yaml"]
+
+[tool.setuptools.exclude-package-data]
+# The fixtures include a runnable repo whose test suite leaves __pycache__
+# behind; never ship bytecode.
+"*" = ["__pycache__/*", "**/__pycache__/*", "*.pyc"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+norecursedirs = ["fixtures"]
+# The bundled pytest plugin (auto-xdist for the gate-regression suite) used to
+# register via a `pytest11` entry point; as a published package that would
+# load into EVERY user's pytest runs, so it is now wired repo-locally only.
+addopts = "-p swe_duel.pytest_plugin"
+markers = [
+    "integration: tests that make real LLM calls via OpenRouter",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+# repos/ holds third-party clones (flask, sqlalchemy, …) checked out at pinned
+# commits by `swe-duel setup repos`; they are runtime input, not our source, and
+# are never linted. Without this exclusion `ruff check .` fails after setup.
+exclude = ["repos"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+# The bundled fixtures include the mock target repo's own test suite — runtime
+# data, not our source; never type-check it.
+exclude = "swe_duel/validation/fixtures"
