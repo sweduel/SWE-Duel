@@ -142,7 +142,7 @@ class ArtifactLogger:
             repo_name=challenge_record.repo_name,
             target_files=list(challenge_record.target_files),
             feature_spec=ch.feature_spec,
-            bug_type=ch.bug_type.value if ch.bug_type else None,
+            bug_type=ch.bug_type,
             bug_description=ch.bug_description,
             bug_location=ch.bug_location,
             review_findings=[

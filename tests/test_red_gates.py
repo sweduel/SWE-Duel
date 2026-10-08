@@ -12,7 +12,6 @@ from unittest.mock import MagicMock
 from swe_duel.config import ArenaConfig, RedGatesConfig, RepoConfig
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     ExecutionResult,
     GateStatus,
     RedChallenge,
@@ -114,7 +113,7 @@ def _valid_challenge(
         else {"src/foo.py": "x = 1\ndef feature():\n    return 42\n"},
         original_file_contents={"src/foo.py": "x = 1\n"},
         feature_test_code=feature_test_code,
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="loop bound skips the final element",
         bug_description="desc",
         bug_location="src/foo.py:feature",
         bug_test_code=bug_test_code,

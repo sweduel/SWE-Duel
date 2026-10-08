@@ -52,7 +52,6 @@ models:
   gemini-3.8-flash:
     model_id: "google/gemini-3.8-flash"
     temperature: 0.2
-    # Alibaba is the only OpenRouter endpoint serving this model.
     # Severe rate-limiting!
     reasoning_efforts: ["high", "medium", "low"]
     providers: [

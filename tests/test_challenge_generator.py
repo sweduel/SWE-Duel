@@ -13,7 +13,6 @@ from swe_duel.challenge_bank.store import ChallengeStore
 from swe_duel.config import ArenaConfig, ChallengeBankConfig, ModelConfig, RepoConfig
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     GateResult,
     GateStatus,
     RedChallenge,
@@ -47,7 +46,7 @@ def _challenge() -> RedChallenge:
         modified_file_contents={"src/foo.py": "content"},
         original_file_contents={"src/foo.py": "orig"},
         feature_test_code="def test_a():\n    assert 1",
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="loop bound skips the final element",
         bug_description="d",
         bug_location="l",
         bug_test_code="def test_b():\n    assert 1",
@@ -232,7 +231,7 @@ def test_collect_gists_includes_prior_feature_and_bug_locations(tmp_path, record
         {
             "target_files": ["src/foo.py"],
             "bug_location": "l",
-            "bug_type": "logic_error",
+            "bug_type": "loop bound skips the final element",
             "feature_spec": "s",
         }
     ]

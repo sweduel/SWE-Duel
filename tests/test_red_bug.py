@@ -18,7 +18,7 @@ import pytest
 from swe_duel.agents.agent_wrapper import AgentWrapper
 from swe_duel.agents.red import RedAgent, RedOutputError
 from swe_duel.config import ModelConfig, RepoConfig
-from swe_duel.models import AgentTrajectory, BugType, Workspace
+from swe_duel.models import AgentTrajectory, Workspace
 from swe_duel.sandbox.workspace import WorkspaceManager
 
 from conftest import FIXTURES_DIR, load_integration_models, integration_model_id
@@ -90,7 +90,7 @@ def _valid_metadata() -> dict:
         "exploration_summary": "summary",
         "feature_spec": "spec",
         "feature_rationale": "rationale",
-        "bug_type": "logic_error",
+        "bug_type": "loop bound skips the final element",
         "bug_description": "desc",
         "bug_location": "src/foo.py:fn",
     }
@@ -122,7 +122,7 @@ class TestExtractChallengeWithBug:
         record("bug_location", challenge.bug_location)
         record("bug_test_code", challenge.bug_test_code)
 
-        assert challenge.bug_type == BugType.LOGIC_ERROR
+        assert challenge.bug_type == "modulo truncates toward zero for negative operands"
         assert challenge.bug_description and "modulo" in challenge.bug_description
         assert challenge.bug_location == "src/calculator/basic.py:modulo"
         assert challenge.bug_test_code and "def test_" in challenge.bug_test_code
@@ -135,9 +135,18 @@ class TestValidateMetadataWithBug:
         RedAgent._validate_metadata(data)
         record("result", "accepted")
 
-    def test_validate_metadata_bug_type_invalid(self, record):
+    def test_validate_metadata_bug_type_free_text_accepted(self, record):
+        # bug_type is a free-text description now — any non-empty phrase is
+        # valid, not just a fixed category tag.
+        data = _valid_metadata()
+        data["bug_type"] = "not a fixed category but free text"
+        record("input", data)
+        RedAgent._validate_metadata(data)
+        record("result", "accepted")
+
+    def test_validate_metadata_bug_type_empty_rejected(self, record):
         bad = _valid_metadata()
-        bad["bug_type"] = "not_a_type"
+        bad["bug_type"] = "   "
         record("input", bad)
         with pytest.raises(RedOutputError, match="bug_type") as exc_info:
             RedAgent._validate_metadata(bad)
@@ -229,7 +238,7 @@ class TestGenerateChallengeFull:
             })
 
             assert (workspace.path / "_swe-duel" / "bug_tests.py").exists()
-            assert isinstance(challenge.bug_type, BugType)
+            assert isinstance(challenge.bug_type, str) and challenge.bug_type.strip()
             assert challenge.bug_description and challenge.bug_description.strip()
             assert challenge.bug_location and challenge.bug_location.strip()
             bug_fn_count = challenge.bug_test_code.count("def test_")

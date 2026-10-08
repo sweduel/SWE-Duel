@@ -15,7 +15,6 @@ from pathlib import Path
 
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     ChallengePoolStats,
     ChallengeRecord,
     FailedChallengeRecord,
@@ -85,10 +84,6 @@ def _serialise_record(record: ChallengeRecord) -> dict:
     # asdict turns enums into their values for str-enum subclasses, but datetime
     # must be converted manually.
     d["generated_at"] = record.generated_at.isoformat()
-    # bug_type inside RedChallenge may be a BugType enum
-    ch = d["challenge"]
-    if ch.get("bug_type") is not None and not isinstance(ch["bug_type"], str):
-        ch["bug_type"] = record.challenge.bug_type.value if record.challenge.bug_type else None
     # normalise gate statuses to their string values
     for gr in d["validation"]["gate_results"]:
         if not isinstance(gr["status"], str):
@@ -99,7 +94,9 @@ def _serialise_record(record: ChallengeRecord) -> dict:
 
 def _deserialise_record(data: dict) -> ChallengeRecord:
     ch = data["challenge"]
-    bug_type = BugType(ch["bug_type"]) if ch.get("bug_type") else None
+    # Free-text bug label; legacy records carry the old single-word category
+    # tags ("logic_error", ...) which load unchanged as plain strings.
+    bug_type = str(ch["bug_type"]) if ch.get("bug_type") else None
     trajectory = AgentTrajectory(**ch["agent_trajectory"])
     feature_trajectory = (
         AgentTrajectory(**ch["feature_trajectory"])
@@ -196,7 +193,7 @@ def _deserialise_self_review(data: dict | None) -> RedSelfReview | None:
 def _deserialise_challenge_or_none(ch: dict | None) -> RedChallenge | None:
     if not ch:
         return None
-    bug_type = BugType(ch["bug_type"]) if ch.get("bug_type") else None
+    bug_type = str(ch["bug_type"]) if ch.get("bug_type") else None
     trajectory = AgentTrajectory(**ch["agent_trajectory"]) if ch.get("agent_trajectory") else AgentTrajectory(
         steps=[], total_steps=0, total_input_tokens=0, total_output_tokens=0,
         total_cost_usd=0.0, model_id="", duration_seconds=0.0,
@@ -547,9 +544,6 @@ def _render_failed_record_html(
 def _serialise_failed(record: FailedChallengeRecord) -> dict:
     d = asdict(record)
     d["generated_at"] = record.generated_at.isoformat()
-    if d.get("challenge") and d["challenge"].get("bug_type") is not None \
-            and not isinstance(d["challenge"]["bug_type"], str):
-        d["challenge"]["bug_type"] = record.challenge.bug_type.value if record.challenge and record.challenge.bug_type else None
     if d.get("validation"):
         for gr in d["validation"]["gate_results"]:
             if not isinstance(gr["status"], str):
@@ -1163,7 +1157,7 @@ class ChallengeStore:
                 target_dist[tf] += 1
             bt = r.challenge.bug_type
             if bt is not None:
-                bug_dist[bt.value] += 1
+                bug_dist[bt] += 1
             total_cost += r.generation_cost_usd
             total_retries += r.generation_retries
         avg_retries = total_retries / len(records) if records else 0.0
@@ -1187,7 +1181,7 @@ class ChallengeStore:
 
 def _render_record_html(record: ChallengeRecord) -> str:
     ch = record.challenge
-    bug_type = ch.bug_type.value if ch.bug_type else None
+    bug_type = ch.bug_type
     feature_steps = (
         list(ch.feature_trajectory.steps) if ch.feature_trajectory else None
     )

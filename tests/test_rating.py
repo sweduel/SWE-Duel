@@ -56,12 +56,12 @@ def _round(
         cost_usd=0.0,
         timestamp=datetime.now(timezone.utc),
     )
-    from swe_duel.models import BugType, ChallengeRecord, GateResult, GateStatus, RedChallenge, RedValidationResult
+    from swe_duel.models import ChallengeRecord, GateResult, GateStatus, RedChallenge, RedValidationResult
     challenge = RedChallenge(
         target_files=["x.py"], exploration_summary="", feature_spec="",
         feature_rationale="", pr_diff="", modified_file_contents={},
         original_file_contents={}, feature_test_code="",
-        bug_type=BugType.LOGIC_ERROR, bug_description="", bug_location="",
+        bug_type="loop bound skips the final element", bug_description="", bug_location="",
         bug_test_code="", agent_trajectory=traj,
     )
     rec = ChallengeRecord(

@@ -14,7 +14,6 @@ from swe_duel.engine.defense_evaluator import DefenseEvaluator, StaleChallengeEr
 from swe_duel.models import (
     AgentTrajectory,
     BlueFix,
-    BugType,
     ChallengeRecord,
     GateResult,
     GateStatus,
@@ -50,7 +49,7 @@ def _red_challenge() -> RedChallenge:
         modified_file_contents={"src/foo.py": "content"},
         original_file_contents={"src/foo.py": "orig"},
         feature_test_code="def test_f():\n    assert True\n",
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="loop bound skips the final element",
         bug_description="d",
         bug_location="l",
         bug_test_code="def test_b():\n    assert True\n",

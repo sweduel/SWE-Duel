@@ -15,7 +15,6 @@ from swe_duel.challenge_bank.store import ChallengeStore
 from swe_duel.config import RepoConfig
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     ChallengeRecord,
     GateResult,
     GateStatus,
@@ -38,7 +37,7 @@ def _record(commit: str, repo: str = "flask") -> ChallengeRecord:
         modified_file_contents={"f.py": "c"},
         original_file_contents={"f.py": "o"},
         feature_test_code="def test_a():\n    assert 1",
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="loop bound skips the final element",
         bug_description="d",
         bug_location="l",
         bug_test_code="def test_b():\n    assert 1",

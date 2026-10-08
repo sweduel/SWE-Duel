@@ -21,7 +21,6 @@ from swe_duel.engine.tournament import TournamentOrchestrator
 from swe_duel.logging.artifacts import ArtifactLogger
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     ChallengeRecord,
     GateResult,
     GateStatus,
@@ -48,7 +47,7 @@ def _challenge_record(red_model: str, repo: str) -> ChallengeRecord:
         target_files=["f.py"], exploration_summary="", feature_spec="",
         feature_rationale="", pr_diff="", modified_file_contents={},
         original_file_contents={}, feature_test_code="",
-        bug_type=BugType.LOGIC_ERROR, bug_description="", bug_location="",
+        bug_type="loop bound skips the final element", bug_description="", bug_location="",
         bug_test_code="", agent_trajectory=_trajectory(),
     )
     return ChallengeRecord(

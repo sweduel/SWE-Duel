@@ -169,7 +169,7 @@ class TestValidateMetadata:
             "exploration_summary": "summary",
             "feature_spec": "spec",
             "feature_rationale": "rationale",
-            "bug_type": "logic_error",
+            "bug_type": "loop bound skips the final element",
             "bug_description": "desc",
             "bug_location": "src/foo.py:fn",
         }

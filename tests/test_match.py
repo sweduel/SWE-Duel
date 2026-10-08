@@ -16,7 +16,6 @@ from swe_duel.logging.artifacts import ArtifactLogger
 from swe_duel.models import (
     AgentTrajectory,
     BlueFix,
-    BugType,
     ChallengeRecord,
     DefenseResult,
     GateResult,
@@ -53,7 +52,7 @@ def _challenge() -> RedChallenge:
         modified_file_contents={"src/foo.py": "c"},
         original_file_contents={"src/foo.py": "o"},
         feature_test_code="def test_f():\n    assert True\n",
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="loop bound skips the final element",
         bug_description="d",
         bug_location="l",
         bug_test_code="def test_b():\n    assert True\n",

@@ -3,7 +3,7 @@
   "exploration_summary": "The calculator package exposes add/subtract/multiply/divide in basic.py and has a focused test suite in tests/test_basic.py. It is a natural place to extend arithmetic operations.",
   "feature_spec": "Adds a modulo(a, b) function that returns a % b and raises ZeroDivisionError when b is zero, mirroring the divide implementation.",
   "feature_rationale": "Modulo is a primitive arithmetic operation that complements the existing divide function and follows the same interface conventions.",
-  "bug_type": "logic_error",
+  "bug_type": "modulo truncates toward zero for negative operands",
   "bug_description": "modulo() computes `a - int(a / b) * b` which truncates toward zero rather than flooring, so it disagrees with Python's `%` operator for negative operands (e.g., modulo(-5, 3) returns -2 instead of 1). Feature tests only cover positive operands and miss the divergence.",
   "bug_location": "src/calculator/basic.py:modulo"
 }

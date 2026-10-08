@@ -180,7 +180,7 @@ def _defense_kwargs(**over):
     base = dict(
         defense_id="d1", challenge_id="c1", red_model_id="r", blue_model_id="b",
         repo_name="flask", target_files=["a.py"], feature_spec="feat",
-        bug_type="logic_error", bug_description="d", bug_location="l",
+        bug_type="loop bound skips the final element", bug_description="d", bug_location="l",
         review_findings=[], fix_explanation="fix",
         original_file_contents={"a.py": "1\n"}, red_file_contents={"a.py": "2\n"},
         blue_file_contents={"a.py": "3\n"},

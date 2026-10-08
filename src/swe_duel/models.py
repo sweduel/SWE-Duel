@@ -84,14 +84,9 @@ def display_composite_id(cid: str) -> str:
 # Phase 1: Enums
 # ═══════════════════════════════════════════════════════
 
-class BugType(str, Enum):
-    LOGIC_ERROR = "logic_error"
-    SECURITY_VULNERABILITY = "security_vulnerability"
-    RACE_CONDITION = "race_condition"
-    RESOURCE_LEAK = "resource_leak"
-    TYPE_CONFUSION = "type_confusion"
-    OFF_BY_ONE = "off_by_one"
-    INPUT_VALIDATION = "input_validation"
+# Bug labels are NOT a fixed taxonomy: `bug_type` is a short free-text
+# description (about six or seven words) the Red agent writes in its own
+# words, e.g. "modulo returns wrong remainder for negative dividends".
 
 class MatchOutcome(str, Enum):
     MODEL_A_WINS = "model_a_wins"
@@ -201,7 +196,8 @@ class RedChallenge:
     feature_test_code: str                # pytest file testing the new feature
 
     # Bug (populated in Phase 6; None during Phase 5 feature-only tests)
-    bug_type: BugType | None
+    # Free-text label of the embedded bug (about 6-7 words, agent's own words).
+    bug_type: str | None
     bug_description: str | None           # HIDDEN from Blue
     bug_location: str | None              # HIDDEN from Blue
     bug_test_code: str | None             # HIDDEN from Blue — pytest that FAILS when bug present

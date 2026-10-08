@@ -328,7 +328,6 @@ def check_scoring_replay(arena: ArenaConfig) -> tuple[bool, str]:
     """
     from swe_duel.models import (
         BlueFix,
-        BugType,
         ChallengeRecord,
         GateResult,
         GateStatus,
@@ -357,7 +356,7 @@ def check_scoring_replay(arena: ArenaConfig) -> tuple[bool, str]:
         modified_file_contents={"src/calculator/basic.py": buggy_basic},
         original_file_contents={},
         feature_test_code=feature_tests,
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="modulo truncates toward zero for negative operands",
         bug_description="hidden",
         bug_location="src/calculator/basic.py:modulo",
         bug_test_code=bug_tests,

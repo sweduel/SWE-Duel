@@ -21,7 +21,6 @@ from swe_duel.agents.harness.base import AgentHarness
 from swe_duel.config import RepoConfig
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     RedChallenge,
     RedValidationResult,
     Workspace,
@@ -700,38 +699,25 @@ class RedAgent:
                         for k in _BUG_METADATA_KEYS:
                             if k not in data or not str(data.get(k, "")).strip():
                                 missing.append(f"_swe-duel/metadata.json::{k}")
-                        # Also reject free-form bug_type labels early so the
-                        # agent can fix them in the recovery loop instead of
-                        # exit=Submitted followed by RedPhaseIncomplete at load.
-                        if "bug_type" in data and str(data.get("bug_type", "")).strip():
-                            raw = str(data["bug_type"]).strip()
-                            try:
-                                BugType(raw)
-                            except ValueError:
-                                valid = [b.value for b in BugType]
-                                missing.append(
-                                    f"_swe-duel/metadata.json::bug_type "
-                                    f"(got {raw!r}; must be one of {valid})"
-                                )
             if not (swe_duel_dir / bug_test_name).exists():
                 missing.append(f"_swe-duel/{bug_test_name}")
             return missing
 
         def _reminder(items: list[str]) -> str:
             bullets = "\n".join(f"  - {p}" for p in items)
-            valid = ", ".join(b.value for b in BugType)
             return (
                 "Phase 2 (bug embedding) is incomplete. Before you submit, you MUST "
                 "ensure the following file(s) / fields exist:\n"
                 f"{bullets}\n\n"
                 "metadata.json must now additionally contain bug_type, "
-                "bug_description, bug_location. `bug_type` MUST be an exact enum "
-                f"value (snake_case), one of: {valid} — not a free-form phrase "
-                "like \"Logic error\". bug_tests.py must have at least 1 "
-                "test function that FAILS on the bugged code and PASSES on the "
-                "original feature code. Write them now, then verify with "
-                "`cat _swe-duel/metadata.json`, and only then submit with "
-                "`echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT`."
+                "bug_description, bug_location. `bug_type` MUST be a short "
+                "free-text categorization of the bug in your own words (up to six or seven "
+                "words, e.g. \"Input validation, boundary, or sentinel handling error\"). "
+                "bug_tests.py must have at "
+                "least 1 test function that FAILS on the bugged code and "
+                "PASSES on the original feature code. Write them now, then "
+                "verify with `cat _swe-duel/metadata.json`, and only then "
+                "submit with `echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT`."
             )
 
         return self.agent_wrapper.run(
@@ -928,11 +914,9 @@ class RedAgent:
             workspace, list(modified_file_contents.keys())
         )
 
-        bug_type_str = metadata["bug_type"]
-        try:
-            bug_type = BugType(bug_type_str)
-        except ValueError as e:
-            raise RedOutputError(f"Invalid bug_type: {bug_type_str!r}") from e
+        # Free-text bug label (validated as a non-empty string by
+        # _validate_metadata before this point).
+        bug_type = str(metadata["bug_type"])
 
         combined_trajectory = self._combine_trajectories(
             feature_trajectory, bug_trajectory
@@ -1023,7 +1007,7 @@ class RedAgent:
 
         # Bug HTML: feature-only → bugged.
         bug_annotation = (
-            f"<div class='banner'><b>Embedded bug ({html.escape(challenge.bug_type.value if challenge.bug_type else 'unknown')}):</b> "
+            f"<div class='banner'><b>Embedded bug ({html.escape(challenge.bug_type or 'unknown')}):</b> "
             f"{html.escape(challenge.bug_description or '')}<br/>"
             f"<b>Location:</b> {html.escape(challenge.bug_location or '')}</div>"
         )
@@ -1056,21 +1040,12 @@ class RedAgent:
             "exploration_summary",
             "feature_spec",
             "feature_rationale",
+            "bug_type",
             "bug_description",
             "bug_location",
         ):
             if not isinstance(metadata[key], str) or not metadata[key].strip():
                 raise RedOutputError(f"metadata.{key} must be a non-empty string")
-        bug_type = metadata["bug_type"]
-        if not isinstance(bug_type, str) or not bug_type.strip():
-            raise RedOutputError("metadata.bug_type must be a non-empty string")
-        try:
-            BugType(bug_type)
-        except ValueError as e:
-            valid = [b.value for b in BugType]
-            raise RedOutputError(
-                f"metadata.bug_type {bug_type!r} is not a valid BugType; valid: {valid}"
-            ) from e
 
     @staticmethod
     def _validate_tests(

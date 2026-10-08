@@ -43,10 +43,12 @@ FAIRNESS CONTRACT (this is the gate that fails most challenges — read carefull
 
 REQUIRED WORKFLOW — follow these steps in order:
 
-1. DESIGN the bug (no edits yet). Pick one category from: logic_error,
-   security_vulnerability, race_condition, resource_leak, type_confusion,
-   off_by_one, input_validation. Decide exactly which line(s) you will change
-   and what observable behavior will differ.
+1. DESIGN the bug (no edits yet). You have COMPLETE FREEDOM in what kind of
+   bug or vulnerability you embed — there is no fixed category list. Choose
+   any genuine defect class you want (logic error, security hole, race,
+   resource leak, type confusion, off-by-one, input validation, or anything
+   else). Decide exactly which line(s) you will change and what observable
+   behavior will differ.
    The bug must be a GENUINE defect — one that a competent reviewer would rate
    at MEDIUM severity or higher: it produces wrong results, crashes, data
    corruption, a security/data-integrity hole, or a resource leak on a

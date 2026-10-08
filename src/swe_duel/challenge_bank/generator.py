@@ -283,7 +283,7 @@ class ChallengeGenerator:
                 {
                     "target_files": list(r.target_files),
                     "bug_location": r.challenge.bug_location or "",
-                    "bug_type": r.challenge.bug_type.value if r.challenge.bug_type else "unknown",
+                    "bug_type": r.challenge.bug_type or "unknown",
                     "feature_spec": spec,
                 }
             )
@@ -623,7 +623,7 @@ class ChallengeGenerator:
 
             _log(
                 f"    stage=agent-run OK: target_files={challenge.target_files} "
-                f"bug_type={challenge.bug_type.value if challenge.bug_type else None} "
+                f"bug_type={challenge.bug_type or None} "
                 f"cost=${challenge.agent_trajectory.total_cost_usd:.4f} "
                 f"steps={challenge.agent_trajectory.total_steps}",
                 flush=True,

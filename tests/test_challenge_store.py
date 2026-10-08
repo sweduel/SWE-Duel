@@ -17,7 +17,6 @@ from swe_duel.challenge_bank.store import (
 )
 from swe_duel.models import (
     AgentTrajectory,
-    BugType,
     ChallengeRecord,
     GateResult,
     GateStatus,
@@ -51,7 +50,7 @@ def _challenge(target_files: list[str]) -> RedChallenge:
         modified_file_contents={target_files[0]: "content"},
         original_file_contents={target_files[0]: "orig"},
         feature_test_code="def test_a():\n    assert 1",
-        bug_type=BugType.LOGIC_ERROR,
+        bug_type="loop bound skips the final element",
         bug_description="d",
         bug_location="loc",
         bug_test_code="def test_b():\n    assert 1",
@@ -123,7 +122,7 @@ def test_store_and_get(store: ChallengeStore, record):
     record("loaded", loaded)
     assert loaded.challenge_id == rec.challenge_id
     assert loaded.red_model_id == rec.red_model_id
-    assert loaded.challenge.bug_type == BugType.LOGIC_ERROR
+    assert loaded.challenge.bug_type == "loop bound skips the final element"
     assert loaded.validation.gate_results[0].status == GateStatus.PASSED
     assert loaded.generated_at == rec.generated_at
 
@@ -231,7 +230,7 @@ def test_pool_stats(store: ChallengeStore, record):
     record("stats", stats)
     assert stats.total_challenges == 5
     assert stats.target_file_distribution == {"a.py": 2, "b.py": 2, "c.py": 1}
-    assert stats.bug_type_distribution == {"logic_error": 5}
+    assert stats.bug_type_distribution == {"loop bound skips the final element": 5}
     assert stats.total_generation_cost_usd == pytest.approx(1.5)
     assert stats.avg_retries == pytest.approx(0.8)
 
