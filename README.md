@@ -1,5 +1,10 @@
 # SWE-Duel: Self-scaling Contamination-resistant Adversial Coding Agent Arena
 
+<!-- [![arXiv](https://img.shields.io/badge/arXiv-link-B31B1B)](https://arxiv.org/abs/link) -->
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+
+
 ![Alt text text](intro.jpg)
 
 A contamination-proof LLM coding benchmark built as a **red-team / blue-team game**:
