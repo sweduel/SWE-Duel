@@ -55,7 +55,7 @@ contributors (`swe-duel-tournament-as` → contribution zip).
 ## Setup
 
 ```bash
-git clone https://github.com/weiminn/SWE-Duel.git
+git clone https://github.com/sweduel/SWE-Duel.git
 cd SWE-Duel
 
 # 1. Virtual environment (venv/ is gitignored — you must create it)
