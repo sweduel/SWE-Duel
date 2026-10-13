@@ -15,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark light">
 <title>SWE-Duel: Self-Scaling Adversarial Coding Agent Arena</title>
-<meta name="description" content="Elo leaderboard of the SWE-Duel round-robin tournament: 12 entrants (9 frontier coding models paired with agent harnesses) in adversarial red/blue coding duels across 15 repositories and 5 languages.">
+<meta name="description" content="SWE-Duel ranks frontier coding models in adversarial Red-Blue duels. The leaderboard shows Elo ratings of coding agent participants in the SWE-Duel round-robin tournament across 15 repositories and 5 languages.">
 <link rel="icon" type="image/svg+xml" href="swe-duel-logo.svg">
 <style>
   :root{
@@ -73,6 +73,16 @@
   .hero-logo{width:1.6em;height:1.6em;flex:none}
   .lede{max-width:64ch;color:var(--text-dim);font-size:15.5px;line-height:1.65}
   .lede b{color:var(--text);font-weight:600}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:32px;align-items:center}
+  .paper-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .pbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-family:var(--mono);font-size:12px;padding:6px 12px;border-radius:9999px;text-decoration:none}
+  .pbtn:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  .citebox{background:var(--card);border:1px solid var(--border);min-width:0}
+  .citebox-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 12px;border-bottom:1px solid var(--border3)}
+  .citebox-h span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
+  .citebox-h button{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--muted);border:1px solid var(--border);border-radius:9999px;padding:3px 10px;cursor:pointer}
+  .citebox-h button:hover{color:var(--text-bright);border-color:var(--text-faint)}
+  .citebox pre{margin:0;padding:8px 12px;font-family:var(--mono);font-size:10.5px;line-height:1.35;color:var(--text-dim);overflow-x:auto;white-space:pre}
 
   .section-h{display:flex;align-items:baseline;justify-content:space-between;margin:44px 0 14px}
   .section-h .note{font-family:var(--mono);font-size:11px;color:var(--text-faint);letter-spacing:.05em;text-transform:uppercase}
@@ -179,6 +189,7 @@
     .cell-chev{grid-area:chev}
     .val{width:118px}
     .hero{padding:44px 0 28px}
+    .hero-grid{grid-template-columns:1fr;gap:20px}
   }
   @media (max-width:760px){
     .brand .sw{display:none}
@@ -214,6 +225,8 @@
 
 <div class="wrap">
   <section class="hero">
+    <div class="hero-grid">
+    <div>
     <!-- <span class="kicker"><span class="dot"></span>Round-robin tournament · July 24–25, 2026</span> -->
     <h1><img class="hero-logo" src="swe-duel-logo.svg" alt="" width="44" height="44">SWE-Duel</h1>
     <p class="lede">
@@ -223,7 +236,35 @@
       the defect without breaking the feature. Every turn is scored by <b>sealed, deterministic
       test-suite execution</b>, and thus never LLM-judged. -->
     </p>
+    <div class="paper-links">
+      <a class="pbtn" href="https://arxiv.org/abs/2610.12569" target="_blank" rel="noopener">📄 Paper · arXiv:2610.12569 ↗</a>
+    </div>
+    </div>
+    <div class="citebox" aria-label="BibTeX citation">
+      <div class="citebox-h">
+        <span>Cite our work:</span>
+        <button type="button" id="cite-copy">Copy BibTeX</button>
+      </div>
+<pre id="cite-bib">@misc{minn2026sweduelselfscalingarenacoding,
+      title={SWE-Duel: Towards a Self-Scaling Arena for Coding Agents}, 
+      author={Wei Minn and Zhensu Sun and Lwin Khin Shar and David Lo},
+      year={2026},
+      eprint={2610.12569},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2610.12569}, 
+}</pre>
+    </div>
+    </div>
   </section>
+  <script>
+  document.getElementById('cite-copy').addEventListener('click', function () {
+    var btn = this, txt = document.getElementById('cite-bib').textContent;
+    var done = function () { btn.textContent = 'Copied ✓'; setTimeout(function () { btn.textContent = 'Copy BibTeX'; }, 1500); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(done); }
+    else { var r = document.createRange(); r.selectNodeContents(document.getElementById('cite-bib')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); s.removeAllRanges(); done(); }
+  });
+  </script>
 
   <!-- <div class="section-h">
     <span class="note">match-level Elo (K=32) · 95% bootstrap CI</span>

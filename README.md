@@ -1,6 +1,7 @@
 # SWE-Duel: Self-scaling Contamination-resistant Adversial Coding Agent Arena
 
-<!-- [![arXiv](https://img.shields.io/badge/arXiv-link-B31B1B)](https://arxiv.org/abs/link) -->
+[![arXiv](https://img.shields.io/badge/arXiv-2610.12569-B31B1B)](https://arxiv.org/abs/2610.12569)
+[![Discord](https://img.shields.io/badge/Discord-SWE--Duel_Community-%235865F2.svg?logo=discord&logoColor=white)](https://discord.gg/uETwkUWGm8)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 
@@ -36,14 +37,6 @@ are `(model, harness)` pairs — the same model under two harnesses counts as tw
   `java-jwt`, `jjwt`), C/C++ (`cjson`, `libexpat`, `simdjson`).
 - Swiss and round-robin **interactive tournament consoles**, a harness-ablation
   round-robin, and an analysis pipeline (Bradley–Terry, Elo, clustered rates, figures).
-
-## Website
-
-The project site lives in [`docs/`](docs/) (GitHub Pages root): the
-[leaderboard](docs/index.html), [methodology](docs/methodology.html), a
-step-by-step [Setup and Run](docs/setup.html) guide (install → tournament →
-`swe-duel-rankings`), and a [Submit new entrants](docs/submit.html) guide for
-contributors (`swe-duel-tournament-as` → contribution zip).
 
 ## Prerequisites
 
@@ -356,3 +349,19 @@ repos/               # gitignored clones of the target repos
 
 - Add the Openrouter model and providers inside `config/models.yaml`.
 - Then, run `swe-duel-probe-rate-limits` to probe rate limits of the upstream providers.
+
+## Cite our work
+
+If you use SWE-Duel in your research, please cite our [paper](https://arxiv.org/abs/2610.12569):
+
+```bibtex
+@misc{minn2026sweduelselfscalingarenacoding,
+      title={SWE-Duel: Towards a Self-Scaling Arena for Coding Agents}, 
+      author={Wei Minn and Zhensu Sun and Lwin Khin Shar and David Lo},
+      year={2026},
+      eprint={2610.12569},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2610.12569}, 
+}
+```
