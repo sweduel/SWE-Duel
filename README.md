@@ -48,7 +48,7 @@ are `(model, harness)` pairs — the same model under two harnesses counts as tw
 ## Setup
 
 ```bash
-git clone https://github.com/weiminn/SWE-Duel.git
+git clone https://github.com/sweduel/SWE-Duel.git
 cd SWE-Duel
 
 # 1. Virtual environment (venv/ is gitignored — you must create it)
