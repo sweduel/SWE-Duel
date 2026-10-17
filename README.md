@@ -1,9 +1,10 @@
 # SWE-Duel: Self-scaling Contamination-resistant Adversial Coding Agent Arena
 
-[![arXiv](https://img.shields.io/badge/arXiv-2610.12569-B31B1B)](https://arxiv.org/abs/2610.12569)
+[![arXiv](https://img.shields.io/badge/arXiv-2610.12569-B31B1B?logo=arxiv)](https://arxiv.org/abs/2610.12569)
+[![HuggingFace Dataset](https://img.shields.io/badge/Hugging_Face-Dataset-teal?logo=huggingface)](https://huggingface.co/datasets/therealweiminn/SWE-Duel-tournament-data)
 [![Discord](https://img.shields.io/badge/Discord-SWE--Duel_Community-%235865F2.svg?logo=discord&logoColor=white)](https://discord.gg/uETwkUWGm8)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 
 ![Alt text text](intro.jpg)
